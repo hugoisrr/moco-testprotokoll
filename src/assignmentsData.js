@@ -1,5 +1,6 @@
 export const assignments = [
   {
+    id: 1,
     number: '27617.30.001',
     boards: [
       {
@@ -55,7 +56,8 @@ export const assignments = [
     ],
   },
   {
-    number: '27618.30.001',
+    id: 2,
+    number: '27618.30.002',
     boards: [
       {
         serialNumber: 'D500-0157_AC_27618-00248',

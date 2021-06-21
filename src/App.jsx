@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/pages/Home';
 import Einstellungen from './components/pages/Einstellungen';
+import BoardTests from './components/assignments/BoardTests';
 
 import AssignmentState from './context/assignments/AssignmentState';
 
@@ -19,6 +20,7 @@ const App = () => {
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route exact path='/einstellungen' component={Einstellungen} />
+                <Route path='/boardTest/:id' component={BoardTests} />
               </Switch>
             </Container>
           </main>

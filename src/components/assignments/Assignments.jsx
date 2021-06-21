@@ -1,36 +1,36 @@
-import React, { Fragment, useContext, useState } from 'react';
-import { Table, Button, Modal } from 'react-bootstrap';
+import React, { Fragment, useContext } from 'react';
+import { Table } from 'react-bootstrap';
 import AssignmentContext from '../../context/assignments/assignmentContext';
+import { Link } from 'react-router-dom';
 
 const Assignments = () => {
   const assignmentContext = useContext(AssignmentContext);
   const { assignments } = assignmentContext;
 
-  // Modal state
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  if (assignments !== null && assignments.length === 0) {
+    return <h4>Es gibt keine Aufträgen</h4>;
+  }
 
   return (
     <Fragment>
       <Table striped bordered hover size='sm'>
         <thead>
           <tr>
-            <th>Auftrag</th>
-            <th>Platinentest</th>
-            <th>Anzahl Tests</th>
+            <th className='text-center'>Auftrag</th>
+            <th className='text-center'>Anzahl Tests</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {assignments.map((assignment, index) => (
             <tr key={index}>
-              <th>{assignment.number}</th>
-              <th>
-                <Button variant='primary' onClick={handleShow}>
-                  <i className='fas fa-clipboard-list'></i> Tests
-                </Button>
+              <th className='text-center'>{assignment.number}</th>
+              <th className='text-center'>{assignment.boards.length}</th>
+              <th className='text-center'>
+                <Link to={`/boardTest/${assignment.id}`}>
+                  <i className='far fa-list-alt fa-lg'></i>
+                </Link>
               </th>
-              <th>{assignment.boards.length}</th>
             </tr>
           ))}
         </tbody>

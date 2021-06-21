@@ -1,12 +1,24 @@
 import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import Assignments from '../assignments/Assignments';
+import AssignmentForm from '../assignments/AssignmentForm';
 
 const Home = () => {
   return (
     <div>
-      <h1>Aufträge</h1>
       <div>
-        <Assignments />
+        <Container>
+          <Row>
+            <Col>
+              <h1>Auftrag hinzufügen</h1>
+              <AssignmentForm />
+            </Col>
+            <Col>
+              <h1>Aufträge</h1>
+              <Assignments />
+            </Col>
+          </Row>
+        </Container>
       </div>
     </div>
   );

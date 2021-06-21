@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import AssignmentContext from './assignmentContext';
 import assignmentReducer from './assignmentReducer';
 import { assignments } from '../../assignmentsData';
@@ -22,6 +22,11 @@ const AssignmentState = (props) => {
   const [state, dispatch] = useReducer(assignmentReducer, initialState);
 
   // Add Assignment
+  const addAssignment = (assignment) => {
+    assignment.id = uuid;
+    assignment.boards = [];
+    dispatch({ type: ADD_ASSIGNMENT, payload: assignment });
+  };
   // Delete Assignment
   // Update Assignment
   // Add Board
@@ -32,6 +37,7 @@ const AssignmentState = (props) => {
     <AssignmentContext.Provider
       value={{
         assignments: state.assignments,
+        addAssignment,
       }}
     >
       {props.children}
