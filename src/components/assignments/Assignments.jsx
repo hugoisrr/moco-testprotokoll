@@ -18,7 +18,7 @@ const Assignments = () => {
           <tr>
             <th className='text-center'>Auftrag</th>
             <th className='text-center'>Anzahl Tests</th>
-            <th></th>
+            <th className='text-center'>Tests</th>
           </tr>
         </thead>
         <tbody>

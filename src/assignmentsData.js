@@ -1,25 +1,19 @@
 export const assignments = [
   {
-    id: 1,
+    id: '0c7875c4-8814-481f-a237-7b14f83d6433',
     number: '27617.30.001',
     boards: [
       {
         serialNumber: 'D500-0157_AC_27617-00248',
-        timestamp: '1623929054965',
+        timestamp: '62678980',
         tester: 465,
         result: false,
         testProtocol: {
           activeDisplay: true,
           lightsUpLED: true,
           alarmSequence: true,
-          voltageValue: {
-            result: true,
-            value: 12074,
-          },
-          temperature: {
-            result: false,
-            value: 40,
-          },
+          voltageValue: 12074,
+          temperature: 40,
           functionKeyboard: true,
           rotateShaft: true,
           hallSensors: true,
@@ -30,21 +24,15 @@ export const assignments = [
       },
       {
         serialNumber: 'D500-0157_AC_27617-00249',
-        timestamp: '1623929190620',
+        timestamp: '62678980',
         tester: 465,
         result: true,
         testProtocol: {
           activeDisplay: true,
           lightsUpLED: true,
           alarmSequence: true,
-          voltageValue: {
-            result: true,
-            value: 12074,
-          },
-          temperature: {
-            result: true,
-            value: 30,
-          },
+          voltageValue: 12074,
+          temperature: 30,
           functionKeyboard: true,
           rotateShaft: true,
           hallSensors: true,
@@ -56,7 +44,7 @@ export const assignments = [
     ],
   },
   {
-    id: 2,
+    id: 'cc4157ce-56ca-46a8-b804-0b6c2a5c36f9',
     number: '27618.30.002',
     boards: [
       {
@@ -68,14 +56,8 @@ export const assignments = [
           activeDisplay: true,
           lightsUpLED: true,
           alarmSequence: true,
-          voltageValue: {
-            result: true,
-            value: 12074,
-          },
-          temperature: {
-            result: false,
-            value: 40,
-          },
+          voltageValue: 12074,
+          temperature: 40,
           functionKeyboard: true,
           rotateShaft: true,
           hallSensors: true,
@@ -93,14 +75,8 @@ export const assignments = [
           activeDisplay: true,
           lightsUpLED: true,
           alarmSequence: true,
-          voltageValue: {
-            result: true,
-            value: 12074,
-          },
-          temperature: {
-            result: true,
-            value: 30,
-          },
+          voltageValue: 12074,
+          temperature: 30,
           functionKeyboard: true,
           rotateShaft: true,
           hallSensors: true,

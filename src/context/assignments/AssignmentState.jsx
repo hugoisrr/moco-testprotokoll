@@ -23,7 +23,7 @@ const AssignmentState = (props) => {
 
   // Add Assignment
   const addAssignment = (assignment) => {
-    assignment.id = uuid;
+    assignment.id = uuid();
     assignment.boards = [];
     dispatch({ type: ADD_ASSIGNMENT, payload: assignment });
   };
