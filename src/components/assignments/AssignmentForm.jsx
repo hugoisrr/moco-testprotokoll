@@ -34,7 +34,7 @@ const AssignmentForm = () => {
             onChange={onChange}
           />
         </div>
-        <button className='btn btn-primary mt-2' type='submit'>
+        <button className='btn btn-outline-primary mt-2' type='submit'>
           Einreichen
         </button>
       </form>
