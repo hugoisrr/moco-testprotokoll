@@ -3,18 +3,7 @@ import { v4 as uuid } from 'uuid';
 import AssignmentContext from './assignmentContext';
 import assignmentReducer from './assignmentReducer';
 import { assignments } from '../../assignmentsData';
-import {
-  ADD_ASSIGNMENT,
-  DELETE_ASSIGNMENT,
-  UPDATE_ASSIGNMENT,
-  ADD_BOARD,
-  SET_CURRENT_BOARD,
-  CLEAR_CURRENT_BOARD,
-  FILTER_ASSIGNMENTS,
-  CLEAR_FILTER,
-  SET_ALERT,
-  REMOVE_ALERT,
-} from '../types';
+import { ADD_ASSIGNMENT, ADD_TESTED_BOARD_TO_ASSIGNMENT } from '../types';
 
 const AssignmentState = (props) => {
   const initialState = { assignments };
@@ -27,17 +16,19 @@ const AssignmentState = (props) => {
     assignment.boards = [];
     dispatch({ type: ADD_ASSIGNMENT, payload: assignment });
   };
-  // Delete Assignment
-  // Update Assignment
-  // Add Board
-  // Set Current Board
-  // Clear Current Board
+
+  // Add Board to an Assignment
+  const addTestedBoardToAssignment = (testedBoard) => {
+    console.dir(testedBoard);
+    // dispatch({ type: ADD_TESTED_BOARD_TO_ASSIGNMENT, payload: testedBoard });
+  };
 
   return (
     <AssignmentContext.Provider
       value={{
         assignments: state.assignments,
         addAssignment,
+        addTestedBoardToAssignment,
       }}
     >
       {props.children}
