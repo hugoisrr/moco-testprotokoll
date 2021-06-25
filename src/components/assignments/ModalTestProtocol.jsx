@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import AssignmentContext from './../../context/assignments/assignmentContext';
 
-const ModalTestProtocol = ({ assignmentNumber, onHide, show }) => {
+const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
   const assignmentContext = useContext(AssignmentContext);
   const testProtocol = {
     activeDisplay: null,
@@ -34,7 +34,7 @@ const ModalTestProtocol = ({ assignmentNumber, onHide, show }) => {
       setValidated(false);
       assignmentContext.addTestedBoardToAssignment({
         ...testBoard,
-        assignmentNumber,
+        assignmentId,
       });
       setTestBoard({
         serialNumber: '',
@@ -89,7 +89,7 @@ const ModalTestProtocol = ({ assignmentNumber, onHide, show }) => {
               />
               <Form.Control.Feedback>Sieht gut aus!</Form.Control.Feedback>
               <Form.Control.Feedback type='invalid'>
-                Bitte geben Sie eine Seriennummer ein.
+                Bitte geben Sie eine gültige Seriennummer ein.
               </Form.Control.Feedback>
             </Col>
           </Row>

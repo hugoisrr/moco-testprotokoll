@@ -39,7 +39,7 @@ const BoardTests = () => {
       <ModalTestProtocol
         show={modalShow}
         onHide={() => setModalShow(false)}
-        assignmentNumber={number}
+        assignmentId={id}
       />
     </Fragment>
   );

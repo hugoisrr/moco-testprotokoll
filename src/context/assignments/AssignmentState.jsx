@@ -4,6 +4,10 @@ import AssignmentContext from './assignmentContext';
 import assignmentReducer from './assignmentReducer';
 import { assignments } from '../../assignmentsData';
 import { ADD_ASSIGNMENT, ADD_TESTED_BOARD_TO_ASSIGNMENT } from '../types';
+import {
+  booleanConverter,
+  testProtocolResult,
+} from '../../helper/helperFunctions';
 
 const AssignmentState = (props) => {
   const initialState = { assignments };
@@ -18,8 +22,42 @@ const AssignmentState = (props) => {
   };
 
   // Add Board to an Assignment
-  const addTestedBoardToAssignment = (testedBoard) => {
-    console.dir(testedBoard);
+  const addTestedBoardToAssignment = ({
+    activeDisplay,
+    alarmSequence,
+    assignmentId,
+    functionKeyboard,
+    hallSensors,
+    increaseSpeedEngine,
+    individualPhases,
+    lightsUpLED,
+    rotateShaft,
+    serialNumber,
+    switchCommutation,
+    temperature,
+    tester,
+    voltageValue,
+  }) => {
+    let testProtocol = {
+      activeDisplay,
+      lightsUpLED,
+      alarmSequence,
+      functionKeyboard,
+      rotateShaft,
+      hallSensors,
+      individualPhases,
+      switchCommutation,
+      increaseSpeedEngine,
+    };
+
+    testProtocol = booleanConverter(testProtocol);
+    temperature = Number(temperature);
+    voltageValue = Number(voltageValue);
+    testProtocol = { ...testProtocol, temperature, voltageValue };
+
+    console.dir(testProtocol);
+    console.log(testProtocolResult(testProtocol, temperature, voltageValue));
+
     // dispatch({ type: ADD_TESTED_BOARD_TO_ASSIGNMENT, payload: testedBoard });
   };
 
