@@ -7,6 +7,14 @@ export function booleanConverter(stringObject) {
   return booleanValuesConverted;
 }
 
+export function numberConverterArray(stringArray) {
+  const numberArray = stringArray.map((element) => {
+    return Number(element);
+  });
+
+  return numberArray;
+}
+
 export function testProtocolResult(
   testProtocolBooleans,
   temperature,

@@ -3,7 +3,12 @@ import { v4 as uuid } from 'uuid';
 import AssignmentContext from './assignmentContext';
 import assignmentReducer from './assignmentReducer';
 import { assignments } from '../../assignmentsData';
-import { ADD_ASSIGNMENT, ADD_TESTED_BOARD_TO_ASSIGNMENT } from '../types';
+import {
+  ADD_ASSIGNMENT,
+  ADD_TESTED_BOARD_TO_ASSIGNMENT,
+  ASSIGNMENT_ERROR,
+  BOARD_ERROR,
+} from '../types';
 import {
   booleanConverter,
   testProtocolResult,
@@ -16,9 +21,16 @@ const AssignmentState = (props) => {
 
   // Add Assignment
   const addAssignment = (assignment) => {
-    assignment.id = uuid();
-    assignment.boards = [];
-    dispatch({ type: ADD_ASSIGNMENT, payload: assignment });
+    try {
+      assignment.id = uuid();
+      assignment.boards = [];
+      dispatch({ type: ADD_ASSIGNMENT, payload: assignment });
+    } catch (err) {
+      dispatch({
+        type: ASSIGNMENT_ERROR,
+        payload: err.response.msg,
+      });
+    }
   };
 
   // Add Board to an Assignment
@@ -50,15 +62,31 @@ const AssignmentState = (props) => {
       increaseSpeedEngine,
     };
 
-    testProtocol = booleanConverter(testProtocol);
     temperature = Number(temperature);
     voltageValue = Number(voltageValue);
-    testProtocol = { ...testProtocol, temperature, voltageValue };
+    tester = Number(tester);
 
-    console.dir(testProtocol);
-    console.log(testProtocolResult(testProtocol, temperature, voltageValue));
+    testProtocol = booleanConverter(testProtocol);
 
-    // dispatch({ type: ADD_TESTED_BOARD_TO_ASSIGNMENT, payload: testedBoard });
+    const board = {
+      serialNumber,
+      tester,
+      timestamp: Math.round(+new Date() / 1000),
+      result: testProtocolResult(testProtocol, temperature, voltageValue),
+      testProtocol: { ...testProtocol, temperature, voltageValue },
+    };
+
+    try {
+      dispatch({
+        type: ADD_TESTED_BOARD_TO_ASSIGNMENT,
+        payload: { board, assignmentId },
+      });
+    } catch (err) {
+      dispatch({
+        type: BOARD_ERROR,
+        payload: err.response.msg,
+      });
+    }
   };
 
   return (

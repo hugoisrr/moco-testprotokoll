@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import AssignmentContext from './../../context/assignments/assignmentContext';
 
 const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
   const assignmentContext = useContext(AssignmentContext);
+  const innerRef = useRef();
+  useEffect(() => innerRef.current && innerRef.current.focus());
   const testProtocol = {
     activeDisplay: null,
     lightsUpLED: null,
@@ -39,9 +41,9 @@ const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
       setTestBoard({
         serialNumber: '',
         tester: null,
-        ...testProtocol,
+        testProtocol,
       });
-      onHide();
+      // onHide();
     } else {
       e.preventDefault();
       e.stopPropagation();
@@ -80,6 +82,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
             <Col>
               <Form.Control
                 required
+                // ref={innerRef}
                 type='text'
                 name='serialNumber'
                 id='serialNumber'
@@ -222,8 +225,8 @@ const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
                 type='number'
                 name='temperature'
                 id='temperature'
-                min='5'
-                max='40'
+                min='1'
+                max='45'
                 value={temperature}
                 onChange={onChange}
               />
