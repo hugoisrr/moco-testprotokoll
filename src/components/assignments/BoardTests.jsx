@@ -16,7 +16,7 @@ const BoardTests = () => {
     if (newModal) {
       setModalShow(true);
     }
-  });
+  }, [newModal]);
 
   const assignmentContext = useContext(AssignmentContext);
   const { assignments } = assignmentContext;
