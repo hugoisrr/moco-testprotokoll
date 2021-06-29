@@ -29,5 +29,5 @@ export function validateVoltage(value) {
 }
 
 export function validateTemperature(value) {
-  return value > 0 && value < 40 ? 'success' : 'danger';
+  return value >= 20 && value <= 37 ? 'success' : 'danger';
 }

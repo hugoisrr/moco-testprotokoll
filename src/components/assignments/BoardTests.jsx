@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import AssignmentContext from '../../context/assignments/assignmentContext';
@@ -10,6 +10,14 @@ import ModalTestProtocol from './ModalTestProtocol';
 const BoardTests = () => {
   const { id } = useParams();
   const [modalShow, setModalShow] = useState(false);
+  const [newModal, setNewModal] = useState(false);
+
+  useEffect(() => {
+    if (newModal) {
+      setModalShow(true);
+    }
+  }, [newModal]);
+
   const assignmentContext = useContext(AssignmentContext);
   const { assignments } = assignmentContext;
   const { number, boards } = assignments.find((a) => a.id === id);
@@ -38,6 +46,7 @@ const BoardTests = () => {
       )}
       <ModalTestProtocol
         show={modalShow}
+        sendNewModal={() => setNewModal(true)}
         onHide={() => setModalShow(false)}
         assignmentId={id}
       />

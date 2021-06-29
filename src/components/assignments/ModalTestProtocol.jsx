@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import AssignmentContext from './../../context/assignments/assignmentContext';
 
-const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
+const ModalTestProtocol = ({ onHide, show, assignmentId, sendNewModal }) => {
   const assignmentContext = useContext(AssignmentContext);
   const testProtocol = {
     activeDisplay: null,
@@ -42,6 +42,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
         ...testProtocol,
       });
       onHide();
+      sendNewModal();
     } else {
       e.preventDefault();
       e.stopPropagation();
