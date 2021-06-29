@@ -1,17 +1,9 @@
-import React, {
-  useState,
-  Fragment,
-  useContext,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { useState, Fragment, useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const AssignmentForm = () => {
   const assignmentContext = useContext(AssignmentContext);
-  const innerRef = useRef();
-  useEffect(() => innerRef.current && innerRef.current.focus());
   const [assignment, setAssignment] = useState({
     number: '',
   });
@@ -51,7 +43,7 @@ const AssignmentForm = () => {
           <Form.Label>Nummber</Form.Label>
           <Form.Control
             required
-            ref={innerRef}
+            autoFocus
             type='text'
             name='number'
             id='assignmentNumber'

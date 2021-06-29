@@ -1,11 +1,9 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import AssignmentContext from './../../context/assignments/assignmentContext';
 
 const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
   const assignmentContext = useContext(AssignmentContext);
-  const innerRef = useRef();
-  useEffect(() => innerRef.current && innerRef.current.focus());
   const testProtocol = {
     activeDisplay: null,
     lightsUpLED: null,
@@ -41,9 +39,9 @@ const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
       setTestBoard({
         serialNumber: '',
         tester: null,
-        testProtocol,
+        ...testProtocol,
       });
-      // onHide();
+      onHide();
     } else {
       e.preventDefault();
       e.stopPropagation();
@@ -64,6 +62,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
       size='lg'
       aria-labelledby='contained-modal-title-vcenter'
       centered
+      animation={false}
     >
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>
@@ -82,7 +81,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId }) => {
             <Col>
               <Form.Control
                 required
-                // ref={innerRef}
+                autoFocus
                 type='text'
                 name='serialNumber'
                 id='serialNumber'
