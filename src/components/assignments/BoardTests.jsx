@@ -16,7 +16,7 @@ const BoardTests = () => {
     if (newModal) {
       setModalShow(true);
     }
-  }, [newModal]);
+  });
 
   const assignmentContext = useContext(AssignmentContext);
   const { assignments } = assignmentContext;
@@ -46,7 +46,7 @@ const BoardTests = () => {
       )}
       <ModalTestProtocol
         show={modalShow}
-        sendNewModal={() => setNewModal(true)}
+        setNewModal={(value) => setNewModal(value)}
         onHide={() => setModalShow(false)}
         assignmentId={id}
       />

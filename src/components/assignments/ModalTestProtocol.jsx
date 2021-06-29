@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import AssignmentContext from './../../context/assignments/assignmentContext';
 
-const ModalTestProtocol = ({ onHide, show, assignmentId, sendNewModal }) => {
+const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
   const assignmentContext = useContext(AssignmentContext);
   const testProtocol = {
     activeDisplay: null,
@@ -42,12 +42,17 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, sendNewModal }) => {
         ...testProtocol,
       });
       onHide();
-      sendNewModal();
+      setNewModal(true);
     } else {
       e.preventDefault();
       e.stopPropagation();
       setValidated(true);
     }
+  };
+
+  const onCancel = () => {
+    setNewModal(false);
+    onHide();
   };
 
   const onChange = (e) =>
@@ -58,7 +63,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, sendNewModal }) => {
 
   return (
     <Modal
-      onHide={onHide}
+      onHide={onCancel}
       show={show}
       size='lg'
       aria-labelledby='contained-modal-title-vcenter'
@@ -395,7 +400,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, sendNewModal }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={onHide} variant='outline-danger'>
+        <Button onClick={onCancel} variant='outline-danger'>
           Schließen
         </Button>
         <Button variant='outline-primary' type='submit' form='testProtocolForm'>
