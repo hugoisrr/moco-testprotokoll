@@ -22,8 +22,8 @@ const AssignmentState = (props) => {
   // Add Assignment
   const addAssignment = (assignment) => {
     try {
-      assignment.id = uuid();
-      assignment.boards = [];
+      assignment.id = uuid(); // add a generic id to the assignment
+      assignment.boards = []; // add an empty array of boards to the assignment
       dispatch({ type: ADD_ASSIGNMENT, payload: assignment });
     } catch (err) {
       dispatch({
@@ -50,6 +50,7 @@ const AssignmentState = (props) => {
     tester,
     voltageValue,
   }) => {
+    // testProtocol Object created to be added to the new tested Board
     let testProtocol = {
       activeDisplay,
       lightsUpLED,
@@ -62,12 +63,15 @@ const AssignmentState = (props) => {
       increaseSpeedEngine,
     };
 
+    // Convert to numeric values
     temperature = Number(temperature);
     voltageValue = Number(voltageValue);
     tester = Number(tester);
 
+    // Convert to boolean values
     testProtocol = booleanConverter(testProtocol);
 
+    // Create new tested Board to be added to an assignment
     const board = {
       serialNumber,
       tester,
