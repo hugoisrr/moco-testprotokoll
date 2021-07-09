@@ -1,12 +1,10 @@
-import React, { Fragment, useState, useContext } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import AssignmentContext from '../../context/assignments/assignmentContext';
 import ModalDeleteAssignment from './ModalDeleteAssignment';
 
 const DeleteAssignment = ({ assignmentId }) => {
   const [modalShow, setModalShow] = useState(false);
 
-  // const assignmentContext = useContext(AssignmentContext);
   return (
     <Fragment>
       <Link
