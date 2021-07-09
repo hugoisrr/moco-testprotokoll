@@ -13,7 +13,6 @@ export const columns = [
   {
     dataField: 'boards',
     text: 'Zählung',
-    type: Number,
     sort: true,
     formatter: boardsNumberAssignment,
   },

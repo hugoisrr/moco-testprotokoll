@@ -5,6 +5,7 @@ import assignmentReducer from './assignmentReducer';
 import { assignments } from '../../assignmentsData';
 import {
   ADD_ASSIGNMENT,
+  DELETE_ASSIGNMENT,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
   BOARD_ERROR,
@@ -25,6 +26,21 @@ const AssignmentState = (props) => {
       assignment.id = uuid(); // add a generic id to the assignment
       assignment.boards = []; // add an empty array of boards to the assignment
       dispatch({ type: ADD_ASSIGNMENT, payload: assignment });
+    } catch (err) {
+      dispatch({
+        type: ASSIGNMENT_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  // Delete Assignment
+  const deleteAssignment = (assignmentId) => {
+    try {
+      dispatch({
+        type: DELETE_ASSIGNMENT,
+        payload: assignmentId,
+      });
     } catch (err) {
       dispatch({
         type: ASSIGNMENT_ERROR,
@@ -98,6 +114,7 @@ const AssignmentState = (props) => {
       value={{
         assignments: state.assignments,
         addAssignment,
+        deleteAssignment,
         addTestedBoardToAssignment,
       }}
     >

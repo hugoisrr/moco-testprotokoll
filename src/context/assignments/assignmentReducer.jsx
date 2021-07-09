@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import {
   ADD_ASSIGNMENT,
+  DELETE_ASSIGNMENT,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
   BOARD_ERROR,
@@ -13,6 +14,15 @@ export default (state, action) => {
       return {
         ...state,
         assignments: [...state.assignments, action.payload],
+      };
+
+    // delete an assignment from the array of state assignments
+    case DELETE_ASSIGNMENT:
+      return {
+        ...state,
+        assignments: state.assignments.filter(
+          (assignment) => assignment.id !== action.payload
+        ),
       };
 
     // find the current assignment from the array of state assignments and then add the current tested board to the array of boards
