@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
-import AssignmentContext from './../../context/assignments/assignmentContext';
+import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
   const assignmentContext = useContext(AssignmentContext);

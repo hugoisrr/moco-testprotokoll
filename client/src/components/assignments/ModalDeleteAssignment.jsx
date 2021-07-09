@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import AssignmentContext from './../../context/assignments/assignmentContext';
+import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const ModalDeleteAssignment = ({ onHide, show, assignmentId }) => {
   const assignmentContext = useContext(AssignmentContext);
