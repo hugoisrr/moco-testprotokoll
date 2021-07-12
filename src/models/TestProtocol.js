@@ -11,8 +11,50 @@ const testProtocolSchema = new Schema(
       default: false,
     },
     test: {
-      type: Schema.Types.ObjectId,
-      ref: 'Test',
+      activeDisplay: {
+        type: Boolean,
+        default: false,
+      },
+      lightsUpLED: {
+        type: Boolean,
+        default: false,
+      },
+      alarmSequence: {
+        type: Boolean,
+        default: false,
+      },
+      voltageValue: {
+        type: Number,
+        required: true,
+      },
+      temperature: {
+        type: Number,
+        required: true,
+      },
+      functionKeyboard: {
+        type: Boolean,
+        default: false,
+      },
+      rotateShaft: {
+        type: Boolean,
+        default: false,
+      },
+      hallSensors: {
+        type: Boolean,
+        default: false,
+      },
+      individualPhases: {
+        type: Boolean,
+        default: false,
+      },
+      switchCommutation: {
+        type: Boolean,
+        default: false,
+      },
+      increaseSpeedEngine: {
+        type: Boolean,
+        default: false,
+      },
     },
   },
   {
