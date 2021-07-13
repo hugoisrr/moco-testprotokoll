@@ -3,6 +3,7 @@ import { check } from 'express-validator';
 
 import {
   createAssignment,
+  getAssignment,
   showAssignments,
   deleteAssignment,
 } from '../controllers/assignment.controller';
@@ -17,6 +18,6 @@ router
   )
   .get(showAssignments);
 
-router.route('/assignment/:id').delete(deleteAssignment);
+router.route('/assignment/:id').get(getAssignment).delete(deleteAssignment);
 
 export default router;

@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator';
 import Assignment from '../models/Assignment';
+import { getAssignmentById } from '../services/assignment.service';
 
 export async function createAssignment(req, res) {
   // Validation
@@ -13,7 +14,7 @@ export async function createAssignment(req, res) {
   const assignmentExists = await Assignment.findOne({ number });
 
   if (assignmentExists)
-    return res.status(400).json({ message: 'Assignment exists.' });
+    return res.status(400).json({ message: 'Auftrag ist bereits vorhanden.' });
 
   //   Saving a new Assignment
   try {
@@ -33,6 +34,21 @@ export async function createAssignment(req, res) {
   }
 }
 
+export async function getAssignment(req, res) {
+  try {
+    const assignment = await getAssignmentById(req.params.id);
+    if (!assignment)
+      return res.status(404).json({ message: 'Auftrag nicht gefunden' });
+
+    return res.json(assignment);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === 'ObjectId')
+      return res.status(404).json({ message: 'Auftrag nicht gefunden' });
+    return res.status(500).send('Server Error');
+  }
+}
+
 export async function showAssignments(req, res) {
   try {
     const assignmentsList = await Assignment.find().sort({ createdAt: -1 });
@@ -45,7 +61,7 @@ export async function showAssignments(req, res) {
 
 export async function deleteAssignment(req, res) {
   try {
-    const assignment = await Assignment.findById(req.params.id);
+    const assignment = await getAssignmentById(req.params.id);
     if (!assignment)
       return res.status(400).json({ message: 'Auftrag existiert nicht' });
     await Assignment.findByIdAndDelete(req.params.id);
@@ -53,7 +69,7 @@ export async function deleteAssignment(req, res) {
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') {
-      return res.status(404).json({ message: 'Picture not found' });
+      return res.status(404).json({ message: 'Auftrag nicht gefunden' });
     }
     return res.status(500).send('Auftrag nicht gefunden');
   }

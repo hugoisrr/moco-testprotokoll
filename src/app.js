@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 import assignmentRoutes from './routes/assignment';
+import boardRoutes from './routes/board';
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use(json());
 
 // Routes
 app.use('/api', assignmentRoutes);
+app.use('/api', boardRoutes);
 
 export default app;

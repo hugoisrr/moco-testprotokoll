@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const assignmentSchema = new Schema(
   {
@@ -7,7 +7,7 @@ const assignmentSchema = new Schema(
       unique: true,
       required: true,
       trim: true,
-      min: 5,
+      minlength: 5,
     },
     boards: [
       {
