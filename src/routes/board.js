@@ -1,9 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import {
-  createBoard,
-  addBoardToAssignment,
-} from '../controllers/board.controller';
+import { addBoardToAssignment } from '../controllers/board.controller';
 
 const router = Router();
 

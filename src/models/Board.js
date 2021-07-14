@@ -3,6 +3,7 @@ import { Schema, model } from 'mongoose';
 const boardSchema = new Schema({
   serialNumber: {
     type: String,
+    unique: true,
     required: true,
     trim: true,
     min: 4,

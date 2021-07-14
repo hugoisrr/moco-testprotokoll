@@ -1,4 +1,5 @@
 import { validationResult } from 'express-validator';
+import Assignment from '../models/Assignment';
 import Board from '../models/Board';
 import { getAssignmentById } from '../services/assignment.service';
 import {
@@ -13,21 +14,38 @@ export async function addBoardToAssignment(req, res) {
     return res.status(400).json({ errors: errors.array() });
 
   const { serialNumber } = req.body;
-  const assignment = await getAssignmentById(req.params.id);
+
+  // Get the assignment and validate if exists
+  const assignment = await getAssignmentById(req.params.assignmentId);
   if (!assignment)
     return res.status(404).json({ message: 'Auftrag nicht gefunden' });
 
+  const { number, boards } = assignment;
+
+  const belongsBoardToAssignment = await validateBoardBelongsToAssignment(
+    number.slice(0, 5),
+    serialNumber
+  );
   // Verify if the assignment has the same number as in the serialNumber of the board
-  if (
-    !validateBoardBelongsToAssignment(
-      assignment.number.slice(0, 5),
-      serialNumber
-    )
-  )
-    return res
-      .status(404)
-      .json({
-        message: 'Die Serialnummer stimmt nicht der Auftragnummber überein.',
-      });
-  //   Verify if Board already exists or create a new Board
+  if (!belongsBoardToAssignment)
+    return res.status(404).json({
+      message: 'Die Serialnummer stimmt nicht der Auftragnummber überein.',
+    });
+
+  try {
+    // Creates new Board
+    const board = await existsOrCreateBoard(serialNumber);
+
+    // Add to set Board into array boards of Assignment, avoid duplicated boards into the assignment
+    boards.addToSet(board);
+    assignment.save();
+
+    return res.status(200).json({
+      message: 'Board belongs to the Assignment',
+      assignment,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json(err);
+  }
 }
