@@ -1,6 +1,10 @@
 import Board from '../models/Board';
 import config from '../config';
 
+export async function getBoardById(id) {
+  return await Board.findById(id);
+}
+
 export async function existsOrCreateBoard(serialNumber) {
   const boardExists = await Board.findOne({ serialNumber });
 

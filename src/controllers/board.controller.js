@@ -1,6 +1,4 @@
 import { validationResult } from 'express-validator';
-import Assignment from '../models/Assignment';
-import Board from '../models/Board';
 import { getAssignmentById } from '../services/assignment.service';
 import {
   existsOrCreateBoard,
@@ -41,7 +39,7 @@ export async function addBoardToAssignment(req, res) {
     assignment.save();
 
     return res.status(200).json({
-      message: 'Board belongs to the Assignment',
+      message: 'Board added to the Assignment',
       assignment,
     });
   } catch (err) {
