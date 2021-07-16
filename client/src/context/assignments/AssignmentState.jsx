@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 import AssignmentContext from './assignmentContext';
 import assignmentReducer from './assignmentReducer';
 import { assignments } from '../../assignmentsData';
@@ -21,11 +22,22 @@ const AssignmentState = (props) => {
   const [state, dispatch] = useReducer(assignmentReducer, initialState);
 
   // Add Assignment
-  const addAssignment = (assignment) => {
+  const addAssignment = async (assignment) => {
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // };
     try {
       assignment.id = uuid(); // add a generic id to the assignment
       assignment.boards = []; // add an empty array of boards to the assignment
       dispatch({ type: ADD_ASSIGNMENT, payload: assignment });
+      // const res = await axios.post('/api/assignment', number, config);
+
+      // dispatch({
+      //   type: ADD_ASSIGNMENT,
+      //   payload: res.data,
+      // });
     } catch (err) {
       dispatch({
         type: ASSIGNMENT_ERROR,

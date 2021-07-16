@@ -1,6 +1,10 @@
 import { validationResult } from 'express-validator';
 import Assignment from '../models/Assignment';
-import { getAssignmentById } from '../services/assignment.service';
+import {
+  getAssignmentById,
+  getAssignmentByNumber,
+  createNewAssignment,
+} from '../services/assignment.service';
 
 export async function createAssignment(req, res) {
   // Validation
@@ -11,18 +15,14 @@ export async function createAssignment(req, res) {
 
   const { number } = req.body;
 
-  const assignmentExists = await Assignment.findOne({ number });
+  const assignmentExists = await getAssignmentByNumber(number);
 
   if (assignmentExists)
     return res.status(400).json({ message: 'Auftrag ist bereits vorhanden.' });
 
   //   Saving a new Assignment
   try {
-    const newAssignment = new Assignment({
-      number,
-    });
-
-    const assignment = await newAssignment.save();
+    createNewAssignment(number);
 
     return res.status(200).json({
       message: 'Assignment created',

@@ -14,7 +14,7 @@ const Home = () => {
               <AssignmentForm />
             </Col>
             <Col>
-              <h1>Aufträge</h1>
+              <h3>Liste der Aufträge mit ihren Platinen</h3>
               <Assignments />
             </Col>
           </Row>
