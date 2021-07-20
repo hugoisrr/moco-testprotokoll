@@ -37,13 +37,6 @@ const AssignmentState = (props) => {
     }
   };
 
-  const getAssignmentSelected = (assignmentId) => {
-    // return 'Hola';
-    return state.assignments.filter(
-      (assignment) => assignment._id === assignmentId
-    );
-  };
-
   // Add Assignment
   const addAssignment = async (assignment) => {
     const config = {
@@ -149,7 +142,6 @@ const AssignmentState = (props) => {
         error: state.error,
         addAssignment,
         getAssignments,
-        getAssignmentSelected,
         deleteAssignment,
         addTestedBoardToAssignment,
       }}

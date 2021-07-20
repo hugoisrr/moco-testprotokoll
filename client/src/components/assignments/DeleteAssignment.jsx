@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ModalDeleteAssignment from './ModalDeleteAssignment';
 
-const DeleteAssignment = ({ assignmentId }) => {
+const DeleteAssignment = ({ assignmentId, assignmentNumber }) => {
   const [modalShow, setModalShow] = useState(false);
 
   return (
@@ -23,6 +23,7 @@ const DeleteAssignment = ({ assignmentId }) => {
         show={modalShow}
         onHide={() => setModalShow(false)}
         assignmentId={assignmentId}
+        assignmentNumber={assignmentNumber}
       />
     </Fragment>
   );

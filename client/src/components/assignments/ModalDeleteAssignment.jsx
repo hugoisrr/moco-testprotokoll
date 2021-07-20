@@ -1,19 +1,21 @@
 import React, { useContext } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 
-const ModalDeleteAssignment = ({ onHide, show, assignmentId }) => {
+const ModalDeleteAssignment = ({
+  onHide,
+  show,
+  assignmentId,
+  assignmentNumber,
+}) => {
   const assignmentContext = useContext(AssignmentContext);
-  const { deleteAssignment, getAssignmentSelected } = assignmentContext;
+  const { deleteAssignment } = assignmentContext;
 
   const onSubmit = (e) => {
     e.preventDefault();
     deleteAssignment(assignmentId);
     onHide();
   };
-
-  const assignment = getAssignmentSelected(assignmentId);
-  // console.log({ assignment });
 
   return (
     <Modal
@@ -26,11 +28,21 @@ const ModalDeleteAssignment = ({ onHide, show, assignmentId }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>
-          Bestätigung zum Löschen eine Auftrag {assignment.number}
+          Bestätigung zum Löschen eine Auftrag - <b>"{assignmentNumber}"</b>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Bitte bestätigen Sie, dass Sie der Auftrag löschen möchten.</p>
+        <Alert variant='warning'>
+          <Alert.Heading>Warnung!</Alert.Heading>
+          <p>
+            Durch das Löschen der Auftrag löschen Sie auch den durchgeführten
+            Leiterplattentest.
+          </p>
+          <hr />
+          <p className='mb-0'>
+            Bitte bestätigen Sie, dass Sie der Auftrag löschen möchten.
+          </p>
+        </Alert>
       </Modal.Body>
       <Modal.Footer>
         <Button variant='outline-danger' onClick={onHide}>
