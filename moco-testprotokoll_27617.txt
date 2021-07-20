@@ -1,0 +1,54 @@
+Datum: 16.06.2021
+Uhrzeit: 11:37
+Prüfer: 443
+Auftragsnummer: 27617.30.001
+Seriennummer: D500-0157_AC_27617-00248
+---
+Flashen des Atmel uController - OK
+Flashen des PSoC - OK
+Display ink. Tastatur anschließen - OK
+Lautsprecher anschließen - OK
+CAN-Verbindung herstellen - OK
+RCR-Baugruppe anschließen - OK
+Motor verbinden - OK
+Display ansteuern. Leuchten alle Segmente? - OK
+Leuchtet die LED? - NG
+Alarmsequenz komplett zu hören? - OK
+Spannungswert? (11500 - 12500 mV) - 12074 mV - OK
+Temperatur? (20 - 37 °C) - 40 °C - NG
+Funktion der Tasten? - OK
+Welle drehen. Drehzahl wird angezeigt? - OK
+Hallsensoren werden gemessen - OK
+Funktionieren die einzelnen Phasen? - OK
+Kommutierung einschalten - OK
+Drehzahl erhöhen. Reagiert der Motor? - OK
+---
+Ergebnis - NG
+
+
+Datum: 16.06.2021
+Uhrzeit: 11:37
+Prüfer: 443
+Auftragsnummer: 27617.30.001
+Seriennummer: D500-0157_AC_27617-00247
+---
+Flashen des Atmel uController - OK
+Flashen des PSoC - OK
+Display ink. Tastatur anschließen - OK
+Lautsprecher anschließen - OK
+CAN-Verbindung herstellen - OK
+RCR-Baugruppe anschließen - OK
+Motor verbinden - OK
+Display ansteuern. Leuchten alle Segmente? - OK
+Leuchtet die LED? - OK
+Alarmsequenz komplett zu hören? - OK
+Spannungswert? (11500 - 12500 mV) - 12074 mV - OK
+Temperatur? (20 - 37 °C) - 30 °C - OK
+Funktion der Tasten? - OK
+Welle drehen. Drehzahl wird angezeigt? - OK
+Hallsensoren werden gemessen - OK
+Funktionieren die einzelnen Phasen? - OK
+Kommutierung einschalten - OK
+Drehzahl erhöhen. Reagiert der Motor? - OK
+---
+Ergebnis - OK
