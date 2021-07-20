@@ -22,12 +22,9 @@ export async function createAssignment(req, res) {
 
   //   Saving a new Assignment
   try {
-    createNewAssignment(number);
+    const assignment = await createNewAssignment(number);
 
-    return res.status(200).json({
-      message: 'Assignment created',
-      assignment,
-    });
+    return res.status(200).json(assignment);
   } catch (err) {
     console.error(err);
     return res.status(500).json(err);

@@ -1,15 +1,14 @@
 import React, { useReducer } from 'react';
-import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 import AssignmentContext from './assignmentContext';
 import assignmentReducer from './assignmentReducer';
-import { assignments } from '../../assignmentsData';
 import {
   ADD_ASSIGNMENT,
   DELETE_ASSIGNMENT,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
   BOARD_ERROR,
+  GET_ASSIGNMENTS,
 } from '../types';
 import {
   booleanConverter,
@@ -17,27 +16,48 @@ import {
 } from '../../helper/helperFunctions';
 
 const AssignmentState = (props) => {
-  const initialState = { assignments };
+  const initialState = { assignments: null, error: null };
 
   const [state, dispatch] = useReducer(assignmentReducer, initialState);
 
+  // Get List of Assignments, sorted by most resent
+  const getAssignments = async () => {
+    try {
+      const res = await axios.get('/api/assignment');
+
+      dispatch({
+        type: GET_ASSIGNMENTS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: ASSIGNMENT_ERROR,
+        payload: err.response.msg,
+      });
+    }
+  };
+
+  const getAssignmentSelected = (assignmentId) => {
+    // return 'Hola';
+    return state.assignments.filter(
+      (assignment) => assignment._id === assignmentId
+    );
+  };
+
   // Add Assignment
   const addAssignment = async (assignment) => {
-    // const config = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
     try {
-      assignment.id = uuid(); // add a generic id to the assignment
-      assignment.boards = []; // add an empty array of boards to the assignment
-      dispatch({ type: ADD_ASSIGNMENT, payload: assignment });
-      // const res = await axios.post('/api/assignment', number, config);
+      const res = await axios.post('/api/assignment', assignment, config);
 
-      // dispatch({
-      //   type: ADD_ASSIGNMENT,
-      //   payload: res.data,
-      // });
+      dispatch({
+        type: ADD_ASSIGNMENT,
+        payload: res.data,
+      });
     } catch (err) {
       dispatch({
         type: ASSIGNMENT_ERROR,
@@ -47,8 +67,9 @@ const AssignmentState = (props) => {
   };
 
   // Delete Assignment
-  const deleteAssignment = (assignmentId) => {
+  const deleteAssignment = async (assignmentId) => {
     try {
+      await axios.delete(`/api/assignment/${assignmentId}`);
       dispatch({
         type: DELETE_ASSIGNMENT,
         payload: assignmentId,
@@ -125,7 +146,10 @@ const AssignmentState = (props) => {
     <AssignmentContext.Provider
       value={{
         assignments: state.assignments,
+        error: state.error,
         addAssignment,
+        getAssignments,
+        getAssignmentSelected,
         deleteAssignment,
         addTestedBoardToAssignment,
       }}

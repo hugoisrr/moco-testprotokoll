@@ -1,7 +1,6 @@
 import {
+  actionButtons,
   boardsNumberAssignment,
-  formatLinkTestsAssignment,
-  formatLinkDeleteAssignment,
 } from '../../helper/assignmentFunctions';
 
 export const columns = [
@@ -17,13 +16,8 @@ export const columns = [
     formatter: boardsNumberAssignment,
   },
   {
-    dataField: 'id',
-    text: 'Tests',
-    formatter: formatLinkTestsAssignment,
-  },
-  {
-    dataField: 'id',
-    text: 'Löschen',
-    formatter: formatLinkDeleteAssignment,
+    dataField: '_id',
+    text: 'Aktionen',
+    formatter: actionButtons,
   },
 ];

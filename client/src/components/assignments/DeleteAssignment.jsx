@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ModalDeleteAssignment from './ModalDeleteAssignment';
 
 const DeleteAssignment = ({ assignmentId }) => {
@@ -7,13 +8,17 @@ const DeleteAssignment = ({ assignmentId }) => {
 
   return (
     <Fragment>
-      <Link
-        onClick={() => setModalShow(true)}
-        style={{ color: 'red' }}
-        to={'/'}
+      <OverlayTrigger
+        overlay={<Tooltip id='tooltip-disable'>Auftrag löschen</Tooltip>}
       >
-        <i className='far fa-trash-alt fa-lg'></i>
-      </Link>
+        <Link
+          onClick={() => setModalShow(true)}
+          style={{ color: 'red' }}
+          to={'/'}
+        >
+          <i className='far fa-trash-alt fa-lg'></i>
+        </Link>
+      </OverlayTrigger>
       <ModalDeleteAssignment
         show={modalShow}
         onHide={() => setModalShow(false)}

@@ -1,6 +1,10 @@
 import app from './app';
 import connectDB from './config/database';
 
+// PORT = 5000
+// MONGODB_URL = mongodb://127.0.0.1/moco-test-protocol
+// REGEXP_ASSIGNMENT_NUMBER = _.*_(.*?)-
+
 async function main() {
   connectDB();
   const port = app.get('port');

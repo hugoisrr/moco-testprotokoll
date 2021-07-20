@@ -4,12 +4,16 @@ import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const ModalDeleteAssignment = ({ onHide, show, assignmentId }) => {
   const assignmentContext = useContext(AssignmentContext);
+  const { deleteAssignment, getAssignmentSelected } = assignmentContext;
 
   const onSubmit = (e) => {
     e.preventDefault();
-    assignmentContext.deleteAssignment(assignmentId);
+    deleteAssignment(assignmentId);
     onHide();
   };
+
+  const assignment = getAssignmentSelected(assignmentId);
+  // console.log({ assignment });
 
   return (
     <Modal
@@ -22,7 +26,7 @@ const ModalDeleteAssignment = ({ onHide, show, assignmentId }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>
-          Bestätigung zum Löschen eine Auftrag
+          Bestätigung zum Löschen eine Auftrag {assignment.number}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

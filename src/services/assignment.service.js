@@ -13,5 +13,6 @@ export async function createNewAssignment(number) {
     number,
   });
 
-  return await newAssignment.save();
+  const assignment = await newAssignment.save();
+  return assignment;
 }
