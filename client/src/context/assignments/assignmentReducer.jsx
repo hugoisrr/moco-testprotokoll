@@ -28,7 +28,7 @@ export default (state, action) => {
       return {
         ...state,
         assignments: state.assignments.filter(
-          (assignment) => assignment.id !== action.payload
+          (assignment) => assignment._id !== action.payload
         ),
       };
 

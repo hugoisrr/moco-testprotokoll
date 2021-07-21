@@ -11,7 +11,7 @@ const Assignments = () => {
   useEffect(() => {
     getAssignments();
     // eslint-disable-next-line
-  }, [assignments]);
+  }, []);
 
   if (assignments !== null) {
     return (
