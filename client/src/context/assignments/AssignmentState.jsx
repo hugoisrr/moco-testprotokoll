@@ -5,10 +5,12 @@ import assignmentReducer from './assignmentReducer';
 import {
   ADD_ASSIGNMENT,
   DELETE_ASSIGNMENT,
+  CLEAR_ASSIGNMENT_SELECTED,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
   BOARD_ERROR,
   GET_ASSIGNMENTS,
+  GET_ASSIGNMENT,
 } from '../types';
 import {
   booleanConverter,
@@ -16,7 +18,11 @@ import {
 } from '../../helper/helperFunctions';
 
 const AssignmentState = (props) => {
-  const initialState = { assignments: null, error: null };
+  const initialState = {
+    assignments: null,
+    error: null,
+    assignmentSelected: null,
+  };
 
   const [state, dispatch] = useReducer(assignmentReducer, initialState);
 
@@ -37,6 +43,30 @@ const AssignmentState = (props) => {
     }
   };
 
+  // Get Assignment selected by ID
+  const getAssignmentById = async (assignmentId) => {
+    try {
+      const res = await axios.get(`/api/assignment/${assignmentId}`);
+      dispatch({
+        type: GET_ASSIGNMENT,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: ASSIGNMENT_ERROR,
+        payload: err.response.data.message,
+      });
+    }
+  };
+
+  // before calling another assignment, we clear the previous assignment selected
+  const clearAssignmentSelected = () => {
+    dispatch({
+      type: CLEAR_ASSIGNMENT_SELECTED,
+      payload: null,
+    });
+  };
+
   // Add Assignment
   const addAssignment = async (assignment) => {
     const config = {
@@ -54,7 +84,7 @@ const AssignmentState = (props) => {
     } catch (err) {
       dispatch({
         type: ASSIGNMENT_ERROR,
-        payload: err.response.msg,
+        payload: err.response.data.message,
       });
     }
   };
@@ -140,8 +170,11 @@ const AssignmentState = (props) => {
       value={{
         assignments: state.assignments,
         error: state.error,
+        assignmentSelected: state.assignmentSelected,
         addAssignment,
         getAssignments,
+        getAssignmentById,
+        clearAssignmentSelected,
         deleteAssignment,
         addTestedBoardToAssignment,
       }}

@@ -57,6 +57,7 @@ export async function showAssignments(req, res) {
 }
 
 export async function deleteAssignment(req, res) {
+  //TODO delete boards and test protocols that are related
   try {
     const assignment = await getAssignmentById(req.params.id);
     if (!assignment)

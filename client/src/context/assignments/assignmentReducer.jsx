@@ -2,7 +2,9 @@
 import {
   ADD_ASSIGNMENT,
   GET_ASSIGNMENTS,
+  GET_ASSIGNMENT,
   DELETE_ASSIGNMENT,
+  CLEAR_ASSIGNMENT_SELECTED,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
   BOARD_ERROR,
@@ -16,6 +18,21 @@ export default (state, action) => {
         ...state,
         assignments: action.payload,
       };
+
+    // get assignment by Id
+    case GET_ASSIGNMENT:
+      return {
+        ...state,
+        assignmentSelected: action.payload,
+        error: null,
+      };
+
+    case CLEAR_ASSIGNMENT_SELECTED:
+      return {
+        ...state,
+        assignmentSelected: action.payload,
+      };
+
     // add an assignment to the array of state assignments
     case ADD_ASSIGNMENT:
       return {

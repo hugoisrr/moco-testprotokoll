@@ -6,9 +6,11 @@ import { columns } from './ColumnsAssignment';
 
 const Assignments = () => {
   const assignmentContext = useContext(AssignmentContext);
-  const { assignments, getAssignments } = assignmentContext;
+  const { assignments, getAssignments, clearAssignmentSelected } =
+    assignmentContext;
 
   useEffect(() => {
+    clearAssignmentSelected();
     getAssignments();
     // eslint-disable-next-line
   }, []);
