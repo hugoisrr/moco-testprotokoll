@@ -1,9 +1,10 @@
 import React, { useState, Fragment, useContext } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Alert } from 'react-bootstrap';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const AssignmentForm = () => {
   const assignmentContext = useContext(AssignmentContext);
+  const [show, setShow] = useState(true);
   const [assignment, setAssignment] = useState({
     number: '',
   });
@@ -33,6 +34,14 @@ const AssignmentForm = () => {
 
   return (
     <Fragment>
+      {/* <Alert variant='danger' onClose={() => setShow(false)} dismissible>
+        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+        <p>
+          Change this and that and try again. Duis mollis, est non commodo
+          luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+          Cras mattis consectetur purus sit amet fermentum.
+        </p>
+      </Alert> */}
       <Form
         noValidate
         validated={validated}
