@@ -1,10 +1,11 @@
-import React, { useState, Fragment, useContext } from 'react';
+import React, { useState, Fragment, useContext, useEffect } from 'react';
 import { Button, Form, Alert } from 'react-bootstrap';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const AssignmentForm = () => {
   const assignmentContext = useContext(AssignmentContext);
-  const [show, setShow] = useState(true);
+  const { error, addAssignment, clearError } = assignmentContext;
+  const [show, setShow] = useState(false);
   const [assignment, setAssignment] = useState({
     number: '',
   });
@@ -13,15 +14,25 @@ const AssignmentForm = () => {
 
   const { number } = assignment;
 
+  useEffect(() => {
+    error !== null ? setShow(true) : setShow(false);
+  }, [error]);
+
   const onChange = (e) =>
     setAssignment({ ...assignment, [e.target.name]: e.target.value });
+
+  const closeErrorMessage = () => {
+    clearError();
+    setShow(false);
+  };
 
   const onSubmit = (e) => {
     const form = e.currentTarget;
     if (form.checkValidity()) {
       e.preventDefault();
       setValidated(false);
-      assignmentContext.addAssignment(assignment);
+      clearError();
+      addAssignment(assignment);
       setAssignment({
         number: '',
       });
@@ -34,14 +45,14 @@ const AssignmentForm = () => {
 
   return (
     <Fragment>
-      {/* <Alert variant='danger' onClose={() => setShow(false)} dismissible>
-        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-        <p>
-          Change this and that and try again. Duis mollis, est non commodo
-          luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-          Cras mattis consectetur purus sit amet fermentum.
-        </p>
-      </Alert> */}
+      {show === true && (
+        <Alert variant='danger' onClose={closeErrorMessage} dismissible>
+          <Alert.Heading>Ops, es liegt ein Fehler vor!</Alert.Heading>
+          <p>
+            Der Server hat folgenden Fehler ausgegeben: <strong>{error}</strong>
+          </p>
+        </Alert>
+      )}
       <Form
         noValidate
         validated={validated}

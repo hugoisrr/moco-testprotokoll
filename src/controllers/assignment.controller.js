@@ -18,7 +18,7 @@ export async function createAssignment(req, res) {
   const assignmentExists = await getAssignmentByNumber(number);
 
   if (assignmentExists)
-    return res.status(400).json({ message: 'Auftrag ist bereits vorhanden.' });
+    return res.status(400).json({ message: `Auftrag ${number} ist bereits vorhanden.` });
 
   //   Saving a new Assignment
   try {

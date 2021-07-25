@@ -3,6 +3,7 @@ import {
   ADD_ASSIGNMENT,
   GET_ASSIGNMENTS,
   GET_ASSIGNMENT,
+  CLEAR_ERROR,
   DELETE_ASSIGNMENT,
   CLEAR_ASSIGNMENT_SELECTED,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
@@ -31,6 +32,12 @@ export default (state, action) => {
       return {
         ...state,
         assignmentSelected: action.payload,
+      };
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
       };
 
     // add an assignment to the array of state assignments

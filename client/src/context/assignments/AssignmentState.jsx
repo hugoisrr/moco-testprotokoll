@@ -5,6 +5,7 @@ import assignmentReducer from './assignmentReducer';
 import {
   ADD_ASSIGNMENT,
   DELETE_ASSIGNMENT,
+  CLEAR_ERROR,
   CLEAR_ASSIGNMENT_SELECTED,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
@@ -87,6 +88,14 @@ const AssignmentState = (props) => {
         payload: err.response.data.message,
       });
     }
+  };
+
+  // Clear error message from the server
+  const clearError = () => {
+    dispatch({
+      type: CLEAR_ERROR,
+      payload: null,
+    });
   };
 
   // Delete Assignment
@@ -174,6 +183,7 @@ const AssignmentState = (props) => {
         addAssignment,
         getAssignments,
         getAssignmentById,
+        clearError,
         clearAssignmentSelected,
         deleteAssignment,
         addTestedBoardToAssignment,
