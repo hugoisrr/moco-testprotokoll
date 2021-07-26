@@ -1,7 +1,14 @@
 import Assignment from '../models/Assignment';
 
 export async function getAssignmentById(id) {
-  return await Assignment.findById(id);
+  return await Assignment.findById(id).populate({
+    path: 'boards',
+    model: 'Board',
+    populate: {
+      path: 'testProtocols',
+      model: 'TestProtocol',
+    },
+  });
 }
 
 export async function getAssignmentByNumber(number) {
