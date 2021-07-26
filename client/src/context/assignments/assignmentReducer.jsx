@@ -52,11 +52,12 @@ export default (state, action) => {
     // find the current assignment from the array of state assignments and then add the current tested board to the array of boards
     case ADD_TESTED_BOARD_TO_ASSIGNMENT:
       const assignment = state.assignments.find(
-        (assignment) => assignment.id === action.payload.assignmentId
+        (assignment) => assignment._id === action.payload.assignment._id
       );
       assignment.boards = [...assignment.boards, action.payload.board];
       return {
         ...state,
+        assignmentSelected: assignment,
       };
 
     // In case of an assignment error, show error

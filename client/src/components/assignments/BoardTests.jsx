@@ -74,7 +74,7 @@ const BoardTests = () => {
             </Button>
           </Col>
         </Row>
-        {boards !== null && boards.length === 0 ? (
+        {/* {boards !== null && boards.length === 0 ? (
           <h4>Es gibt keine Tests</h4>
         ) : (
           <BootstrapTable
@@ -83,7 +83,7 @@ const BoardTests = () => {
             columns={columns}
             expandRow={expandRowTestProtocol}
           />
-        )}
+        )} */}
         <ModalTestProtocol
           show={modalShow}
           setNewModal={(value) => setNewModal(value)}

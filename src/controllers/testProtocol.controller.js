@@ -55,6 +55,7 @@ export async function addTestProtocolToBoard(req, res) {
     return res.status(200).json({
       message: 'TestProtocol added to the Board',
       board,
+      testProtocol: newTestProtocol,
     });
   } catch (err) {
     console.error(err);

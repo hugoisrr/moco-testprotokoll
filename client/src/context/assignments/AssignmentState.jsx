@@ -12,10 +12,7 @@ import {
   GET_ASSIGNMENTS,
   GET_ASSIGNMENT,
 } from '../types';
-import {
-  booleanConverter,
-  testProtocolResult,
-} from '../../helper/helperFunctions';
+import { booleanConverter } from '../../helper/helperFunctions';
 
 const AssignmentState = (props) => {
   const initialState = {
@@ -106,7 +103,7 @@ const AssignmentState = (props) => {
   };
 
   // Add Board to an Assignment
-  const addTestedBoardToAssignment = ({
+  const addTestedBoardToAssignment = async ({
     activeDisplay,
     alarmSequence,
     assignmentId,
@@ -143,19 +140,39 @@ const AssignmentState = (props) => {
     // Convert to boolean values
     testProtocol = booleanConverter(testProtocol);
 
+    testProtocol = { ...testProtocol, temperature, voltageValue, tester };
+
     // Create new tested Board to be added to an assignment
-    const board = {
-      serialNumber,
-      tester,
-      timestamp: Math.round(+new Date() / 1000),
-      result: testProtocolResult(testProtocol, temperature, voltageValue),
-      testProtocol: { ...testProtocol, temperature, voltageValue },
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
 
+    const boardData = { serialNumber };
+
     try {
+      // Add board to boardsArray of Assignment
+      const res = await axios.post(
+        `/api/board/${assignmentId}`,
+        boardData,
+        config
+      );
+      // Add Testprotocol to the board
+      const { board, assignment } = res.data;
+      const resTestProtocol = await axios.post(
+        `/api/test-protocol/${board._id}`,
+        testProtocol,
+        config
+      );
+
       dispatch({
         type: ADD_TESTED_BOARD_TO_ASSIGNMENT,
-        payload: { board, assignmentId },
+        payload: {
+          assignment,
+          board: resTestProtocol.data.board,
+        },
       });
     } catch (err) {
       dispatch({
