@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { expandRowTestProtocol } from './ListTestProtocol';
-import { columns } from './ColumnsTestProtocols';
+import { tableTestProtocols } from './TableTestProtocols';
+import { columns } from './ColumnsSerialNumber';
 import ModalTestProtocol from './ModalTestProtocol';
 
 const BoardTests = () => {
@@ -74,16 +75,17 @@ const BoardTests = () => {
             </Button>
           </Col>
         </Row>
-        {/* {boards !== null && boards.length === 0 ? (
+        {boards !== null && boards.length === 0 ? (
           <h4>Es gibt keine Tests</h4>
         ) : (
           <BootstrapTable
             keyField='serialNumber'
             data={boards}
             columns={columns}
-            expandRow={expandRowTestProtocol}
+            expandRow={tableTestProtocols}
+            // expandRow={expandRowTestProtocol}
           />
-        )} */}
+        )}
         <ModalTestProtocol
           show={modalShow}
           setNewModal={(value) => setNewModal(value)}
