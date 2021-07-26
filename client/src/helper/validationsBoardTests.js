@@ -1,5 +1,9 @@
-export function testResultFormatter(cell) {
-  if (!cell) {
+import moment from 'moment';
+import 'moment/locale/de';
+moment.locale('de');
+
+export function testResultFormatter(result) {
+  if (!result) {
     return (
       <span>
         <strong style={{ color: 'red' }}>NG</strong>
@@ -9,11 +13,8 @@ export function testResultFormatter(cell) {
   return <span style={{ color: 'green' }}>OK</span>;
 }
 
-export function dateFormatter(cell) {
-  const date = new Date(cell * 1000);
-  return `
-    ${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} 
-    ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+export function dateFormatter(timestamp) {
+  return moment(timestamp).format('LLLL');
 }
 
 export function rowColorVariant(result) {
