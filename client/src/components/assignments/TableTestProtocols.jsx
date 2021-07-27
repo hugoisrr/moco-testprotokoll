@@ -106,6 +106,7 @@ export const tableTestProtocols = {
               ></i>
             </ListGroup.Item>
           </ListGroup>
+          <hr />
         </div>
       ))}
     </div>

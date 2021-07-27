@@ -7,6 +7,7 @@ import {
   DELETE_ASSIGNMENT,
   CLEAR_ASSIGNMENT_SELECTED,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
+  ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
   BOARD_ERROR,
 } from '../types';
@@ -56,15 +57,30 @@ export default (state, action) => {
         ),
       };
 
-    // find the current assignment from the array of state assignments and then add the current tested board to the array of boards
-    case ADD_TESTED_BOARD_TO_ASSIGNMENT:
-      const assignment = state.assignments.find(
-        (assignment) => assignment._id === action.payload.assignment._id
-      );
-      assignment.boards = [...assignment.boards, action.payload.board];
+    // Add new board with its test to an assignment
+    case ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT:
+      const assignmentSelected = state.assignmentSelected;
+      assignmentSelected.boards = [
+        ...assignmentSelected.boards,
+        action.payload.board,
+      ];
       return {
         ...state,
-        assignmentSelected: assignment,
+        assignmentSelected,
+      };
+
+    // Add new Test to a board that was already tested in an assignment
+    case ADD_TESTED_BOARD_TO_ASSIGNMENT:
+      const assignmentSel = state.assignmentSelected;
+      assignmentSel.boards.map((board) => {
+        if (board._id === action.payload.board._id) {
+          board.testProtocols.push(action.payload.testProtocol);
+        }
+        return board;
+      });
+      return {
+        ...state,
+        assignmentSelected: assignmentSel,
       };
 
     // In case of an assignment error, show error

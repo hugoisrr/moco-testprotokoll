@@ -3,7 +3,6 @@ import { Row, Col, Button, Alert, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 import BootstrapTable from 'react-bootstrap-table-next';
-import { expandRowTestProtocol } from './ListTestProtocol';
 import { tableTestProtocols } from './TableTestProtocols';
 import { columns } from './ColumnsSerialNumber';
 import ModalTestProtocol from './ModalTestProtocol';
@@ -25,8 +24,6 @@ const BoardTests = () => {
       setModalShow(true);
     }
   }, [newModal]);
-
-  console.log({ assignmentSelected });
 
   if (assignmentSelected === null && error === null) {
     return (
@@ -59,7 +56,7 @@ const BoardTests = () => {
   } else {
     const { number, boards } = assignmentSelected;
     return (
-      <Fragment>
+      <BoardTestsContent>
         <Row className='justify-content-between mb-3'>
           <Col className='col-6'>
             <h2>
@@ -83,7 +80,6 @@ const BoardTests = () => {
             data={boards}
             columns={columns}
             expandRow={tableTestProtocols}
-            // expandRow={expandRowTestProtocol}
           />
         )}
         <ModalTestProtocol
@@ -92,7 +88,7 @@ const BoardTests = () => {
           onHide={() => setModalShow(false)}
           assignmentId={id}
         />
-      </Fragment>
+      </BoardTestsContent>
     );
   }
 };

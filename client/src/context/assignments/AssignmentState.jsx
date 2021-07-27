@@ -8,6 +8,7 @@ import {
   CLEAR_ERROR,
   CLEAR_ASSIGNMENT_SELECTED,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
+  ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
   BOARD_ERROR,
   GET_ASSIGNMENTS,
@@ -106,7 +107,7 @@ const AssignmentState = (props) => {
     } catch (err) {
       dispatch({
         type: ASSIGNMENT_ERROR,
-        payload: err.response.msg,
+        payload: err,
       });
     }
   };
@@ -169,24 +170,30 @@ const AssignmentState = (props) => {
         config
       );
       // Add Testprotocol to the board
-      const { board, assignment } = res.data;
       const resTestProtocol = await axios.post(
-        `/api/test-protocol/${board._id}`,
+        `/api/test-protocol/${res.data.board._id}`,
         testProtocol,
         config
       );
 
-      dispatch({
-        type: ADD_TESTED_BOARD_TO_ASSIGNMENT,
-        payload: {
-          assignment,
-          board: resTestProtocol.data.board,
-        },
-      });
+      res.data.boardExists
+        ? dispatch({
+            type: ADD_TESTED_BOARD_TO_ASSIGNMENT,
+            payload: {
+              board: resTestProtocol.data.board,
+              testProtocol: resTestProtocol.data.testProtocol,
+            },
+          })
+        : dispatch({
+            type: ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT,
+            payload: {
+              board: resTestProtocol.data.board,
+            },
+          });
     } catch (err) {
       dispatch({
         type: BOARD_ERROR,
-        payload: err.response.msg,
+        payload: err.response,
       });
     }
   };

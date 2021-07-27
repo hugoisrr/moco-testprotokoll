@@ -6,17 +6,24 @@ export async function getBoardById(id) {
 }
 
 export async function existsOrCreateBoard(serialNumber) {
-  const boardExists = await Board.findOne({ serialNumber });
+  let boardExists = true;
+  let board = await Board.findOne({ serialNumber });
 
-  if (boardExists) return boardExists;
+  if (board) return { board, boardExists };
 
   const newBoard = new Board({
     serialNumber,
   });
 
-  const board = await newBoard.save();
+  board = await newBoard.save();
+  boardExists = false;
 
-  return board;
+  return { board, boardExists };
+}
+
+export async function addSetBoardToAssignment(assignment, board) {
+  assignment.boards.addToSet(board);
+  return await assignment.save();
 }
 
 export async function validateBoardBelongsToAssignment(
