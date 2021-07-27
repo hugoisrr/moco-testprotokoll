@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator';
 import Assignment from '../models/Assignment';
+import Board from '../models/Board';
 import {
   getAssignmentById,
   getAssignmentByNumber,
@@ -18,7 +19,9 @@ export async function createAssignment(req, res) {
   const assignmentExists = await getAssignmentByNumber(number);
 
   if (assignmentExists)
-    return res.status(400).json({ message: `Auftrag ${number} ist bereits vorhanden.` });
+    return res
+      .status(400)
+      .json({ message: `Auftrag ${number} ist bereits vorhanden.` });
 
   //   Saving a new Assignment
   try {
@@ -57,12 +60,12 @@ export async function showAssignments(req, res) {
 }
 
 export async function deleteAssignment(req, res) {
-  //TODO delete boards and test protocols that are related
+  //TODO delete test protocols that are related
   try {
     const assignment = await getAssignmentById(req.params.id);
     if (!assignment)
       return res.status(400).json({ message: 'Auftrag existiert nicht' });
-    await Assignment.findByIdAndDelete(req.params.id);
+    await assignment.deleteOne();
     return res.json({ message: 'Auftrag gelöscht' });
   } catch (err) {
     console.error(err.message);

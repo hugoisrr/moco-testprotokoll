@@ -1,4 +1,6 @@
 import { Schema, model } from 'mongoose';
+import Board from './Board';
+import TestProtocol from './TestProtocol';
 
 const assignmentSchema = new Schema(
   {
@@ -20,5 +22,15 @@ const assignmentSchema = new Schema(
     timestamps: true,
   }
 );
+
+assignmentSchema.pre('deleteOne', { document: true }, async function (next) {
+  try {
+    //TODO delete relationship with testprotocols
+    await Board.deleteMany({ _id: { $in: this.boards } });
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export default model('Assignment', assignmentSchema);
