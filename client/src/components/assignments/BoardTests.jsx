@@ -12,9 +12,11 @@ const BoardTests = () => {
   const [modalShow, setModalShow] = useState(false);
   const [newModal, setNewModal] = useState(false);
   const assignmentContext = useContext(AssignmentContext);
-  const { assignmentSelected, getAssignmentById, error } = assignmentContext;
+  const { assignmentSelected, getAssignmentById, error, clearError } =
+    assignmentContext;
 
   useEffect(() => {
+    clearError();
     getAssignmentById(id);
     // eslint-disable-next-line
   }, []);

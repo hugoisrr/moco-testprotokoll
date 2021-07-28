@@ -4,7 +4,7 @@ import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
   const assignmentContext = useContext(AssignmentContext);
-  const { error, clearError, addTestedBoardToAssignment } = assignmentContext;
+  const { addTestedBoardToAssignment } = assignmentContext;
   const testProtocol = {
     activeDisplay: null,
     lightsUpLED: null,
@@ -25,7 +25,6 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
   });
 
   const [validated, setValidated] = useState(false);
-  const [showError, setShowError] = useState(false);
 
   const { serialNumber, tester, voltageValue, temperature } = testBoard;
 
@@ -61,11 +60,6 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
     onHide();
   };
 
-  const closeErrorMessage = () => {
-    clearError();
-    setShowError(false);
-  };
-
   const onChange = (e) =>
     setTestBoard({
       ...testBoard,
@@ -87,15 +81,6 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {showError === true && (
-          <Alert variant='danger' onClose={closeErrorMessage} dismissible>
-            <Alert.Heading>Ops, es liegt ein Fehler vor!</Alert.Heading>
-            <p>
-              Der Server hat folgenden Fehler ausgegeben:{' '}
-              <strong>{error}</strong>
-            </p>
-          </Alert>
-        )}
         <Form
           noValidate
           validated={validated}

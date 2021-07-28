@@ -193,7 +193,7 @@ const AssignmentState = (props) => {
     } catch (err) {
       dispatch({
         type: BOARD_ERROR,
-        payload: err.response,
+        payload: err.response.data.message,
       });
     }
   };
