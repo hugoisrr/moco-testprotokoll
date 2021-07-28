@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Modal, Button, Form, Row, Col, Alert } from 'react-bootstrap';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
@@ -23,6 +23,8 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
     tester: null,
     ...testProtocol,
   });
+  const serialNumberRef = useRef(null);
+  const testerRef = useRef(null);
 
   const [validated, setValidated] = useState(false);
 
@@ -60,6 +62,12 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
     onHide();
   };
 
+  const serialNumberDown = (e) => {
+    if (e.key === 'Enter') {
+      testerRef.current.focus();
+    }
+  };
+
   const onChange = (e) =>
     setTestBoard({
       ...testBoard,
@@ -81,12 +89,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form
-          noValidate
-          validated={validated}
-          id='testProtocolForm'
-          onSubmit={onSubmit}
-        >
+        <Form noValidate validated={validated} id='testProtocolForm'>
           <Row>
             <Form.Label column>Seriennummer der Leiterkart</Form.Label>
             <Col>
@@ -98,6 +101,8 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
                 id='serialNumber'
                 minLength='5'
                 value={serialNumber}
+                ref={serialNumberRef}
+                onKeyDown={serialNumberDown}
                 onChange={onChange}
               />
               <Form.Control.Feedback>Sieht gut aus!</Form.Control.Feedback>
@@ -117,6 +122,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
                 min='99'
                 max='800'
                 value={tester}
+                ref={testerRef}
                 onChange={onChange}
               />
               <Form.Control.Feedback>Sieht gut aus!</Form.Control.Feedback>
@@ -408,7 +414,12 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
         <Button onClick={onCancel} variant='outline-danger'>
           Schließen
         </Button>
-        <Button variant='outline-primary' type='submit' form='testProtocolForm'>
+        <Button
+          variant='outline-primary'
+          type='button'
+          onClick={onSubmit}
+          form='testProtocolForm'
+        >
           Einreichen
         </Button>
       </Modal.Footer>
