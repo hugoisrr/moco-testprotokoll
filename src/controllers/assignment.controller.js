@@ -1,6 +1,5 @@
 import { validationResult } from 'express-validator';
 import Assignment from '../models/Assignment';
-import Board from '../models/Board';
 import {
   getAssignmentById,
   getAssignmentByNumber,
@@ -60,7 +59,6 @@ export async function showAssignments(req, res) {
 }
 
 export async function deleteAssignment(req, res) {
-  //TODO delete test protocols that are related
   try {
     const assignment = await getAssignmentById(req.params.id);
     if (!assignment)

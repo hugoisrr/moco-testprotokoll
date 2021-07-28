@@ -23,13 +23,22 @@ const assignmentSchema = new Schema(
   }
 );
 
+// When deleteOne is called for an Assignment, the function finds first all
+// its Boards that are related, then it iterates for each Board and deletes
+// all the TestProtocols of the Boards that related. After that it performs
+// the deletion of the Boards related to the Assignment
 assignmentSchema.pre('deleteOne', { document: true }, async function (next) {
   try {
-    //TODO delete relationship with testprotocols
+    let boardsToDelete = await Board.find({ _id: { $in: this.boards } });
+    for (const board of boardsToDelete) {
+      await TestProtocol.deleteMany({
+        _id: { $in: board.testProtocols },
+      });
+    }
     await Board.deleteMany({ _id: { $in: this.boards } });
-    next();
+    return next();
   } catch (error) {
-    console.log(error);
+    return next(error);
   }
 });
 

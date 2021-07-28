@@ -16,9 +16,4 @@ const boardSchema = new Schema({
   ],
 });
 
-boardSchema.pre('remove', function (next) {
-  const TestProtocol = model('TestProtocol');
-  TestProtocol.remove({ _id: { $in: this.testProtocols } }).then(() => next());
-});
-
 export default model('Board', boardSchema);
