@@ -150,7 +150,13 @@ const AssignmentState = (props) => {
     // Convert to boolean values
     testProtocol = booleanConverter(testProtocol);
 
-    testProtocol = { ...testProtocol, temperature, voltageValue, tester };
+    testProtocol = {
+      ...testProtocol,
+      temperature,
+      voltageValue,
+      tester,
+      assignmentId,
+    };
 
     // Create new tested Board to be added to an assignment
 

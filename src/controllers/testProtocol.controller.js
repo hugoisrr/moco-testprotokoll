@@ -9,6 +9,7 @@ import {
   testProtocolResult,
   createTestProtocol,
 } from '../services/testProtocol.service';
+import { createAssignmentTextFile } from '../services/textFile.service';
 
 export async function addTestProtocolToBoard(req, res) {
   // Get the board and validate if exits
@@ -51,6 +52,7 @@ export async function addTestProtocolToBoard(req, res) {
     const newTestProtocol = await createTestProtocol(newTestProtocolObject);
     testProtocols.push(newTestProtocol);
     board.save();
+    createAssignmentTextFile(req.body.assignmentId);
 
     return res.status(200).json({
       message: 'TestProtocol added to the Board',

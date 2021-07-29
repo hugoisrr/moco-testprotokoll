@@ -11,6 +11,13 @@ export async function getAssignmentById(id) {
   });
 }
 
+export async function getAssignmentNumberAndCreatedAtById(id) {
+  return await Assignment.findOne(
+    { _id: id },
+    { number: 1, createdAt: 1, _id: 0 }
+  );
+}
+
 export async function getAssignmentByNumber(number) {
   return await Assignment.findOne({ number });
 }
