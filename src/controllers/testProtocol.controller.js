@@ -21,7 +21,7 @@ export async function addTestProtocolToBoard(req, res) {
   if (!errors.isEmpty())
     return res.status(400).json({ errors: errors.array() });
 
-  const { testProtocols } = board;
+  const { testProtocols, serialNumber } = board;
 
   // Subset with numeric values of Object req.body
   const numericValues = subSetNumericValues(req.body);
@@ -52,7 +52,11 @@ export async function addTestProtocolToBoard(req, res) {
     const newTestProtocol = await createTestProtocol(newTestProtocolObject);
     testProtocols.push(newTestProtocol);
     board.save();
-    createAssignmentTextFile(req.body.assignmentId);
+    createAssignmentTextFile(
+      req.body.assignmentId,
+      newTestProtocol,
+      serialNumber
+    );
 
     return res.status(200).json({
       message: 'TestProtocol added to the Board',
