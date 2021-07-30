@@ -76,11 +76,11 @@ export function testProtocolResult(
     return !result;
   }
   //   verify if temperature is room temperature
-  else if (temperature < 20 || temperature > 37) {
+  else if (validateTemperatureValue(temperature)) {
     return !result;
   }
   // verify if voltageValue is valid
-  else if (voltageValue < 11500 || voltageValue > 12500) {
+  else if (validateVoltageValue(voltageValue)) {
     return !result;
   }
 
@@ -91,4 +91,12 @@ export async function createTestProtocol(testProtocol) {
   const newTestProtocol = new TestProtocol(testProtocol);
 
   return await newTestProtocol.save();
+}
+
+export function validateTemperatureValue(temperature) {
+  return temperature < 20 || temperature > 37;
+}
+
+export function validateVoltageValue(voltageValue) {
+  return voltageValue < 11500 || voltageValue > 12500;
 }
