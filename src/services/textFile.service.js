@@ -1,5 +1,7 @@
 import moment from 'moment';
 import { writeFile, appendFileSync, existsSync } from 'fs';
+import config from '../config';
+import path from 'path';
 import 'moment/locale/de';
 moment.locale('de');
 
@@ -17,9 +19,11 @@ export async function createAssignmentTextFile(
   const { number, createdAt } = await getAssignmentNumberAndCreatedAtById(
     assignmentId
   );
-  const textFilePath = `./MoCo_FKT_${number}_${moment(createdAt).format(
-    'L'
-  )}.txt`;
+  const textFilePath = createTextFilePath(
+    config.pruefDatenServerAddress,
+    number,
+    createdAt
+  );
   const testProtocolData = createTestProtocolData(
     number,
     testProtocol,
@@ -38,6 +42,12 @@ export async function createAssignmentTextFile(
   } catch (error) {
     console.log(error);
   }
+}
+
+function createTextFilePath(storagePath, number, createdAt) {
+  return path.normalize(
+    `${storagePath}/MoCo_FKT_${number}_${moment(createdAt).format('L')}.txt`
+  );
 }
 
 function createTestProtocolData(assignmentNumber, testProtocol, serialNumber) {
