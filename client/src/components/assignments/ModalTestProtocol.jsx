@@ -35,8 +35,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
   }, [setNewModal]);
 
   const onSubmit = (e) => {
-    //TODO fix error on submit form
-    const form = e.currentTarget;
+    const form = e.target.form;
     if (form.checkValidity()) {
       e.preventDefault();
       setValidated(false);

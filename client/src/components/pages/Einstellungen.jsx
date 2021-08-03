@@ -14,7 +14,7 @@ const Einstellungen = () => {
     getFileStoragePath();
     setFilesLocation(fileStoragePath);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fileStoragePath]);
 
   const onModify = () => {
     if (disable) {
@@ -32,19 +32,16 @@ const Einstellungen = () => {
   };
 
   const onSubmit = (e) => {
-    e.preventDefault();
-    // const form = e.target.form
-    // console.log(e.target.form);
-    // const form = e.currentTarget;
-    // if (form.checkValidity()) {
-    //   e.preventDefault();
-    //   setValidated(false);
-    //   // Modify location on Server
-    // } else {
-    //   e.preventDefault();
-    //   e.stopPropagation();
-    //   setValidated(true);
-    // }
+    const form = e.target.form;
+    if (form.checkValidity()) {
+      e.preventDefault();
+      setValidated(false);
+      // Modify location on Server
+    } else {
+      e.preventDefault();
+      e.stopPropagation();
+      setValidated(true);
+    }
   };
 
   return (
