@@ -13,6 +13,7 @@ import {
   BOARD_ERROR,
   GET_ASSIGNMENTS,
   GET_ASSIGNMENT,
+  GET_STORAGE_PATH,
 } from '../types';
 import { booleanConverter } from '../../helper/helperFunctions';
 
@@ -21,6 +22,7 @@ const AssignmentState = (props) => {
     assignments: null,
     error: null,
     assignmentSelected: null,
+    fileStoragePath: '',
   };
 
   const [state, dispatch] = useReducer(assignmentReducer, initialState);
@@ -37,7 +39,24 @@ const AssignmentState = (props) => {
     } catch (err) {
       dispatch({
         type: ASSIGNMENT_ERROR,
-        payload: err.response.msg,
+        payload: err,
+      });
+    }
+  };
+
+  // Get file storage path from the server
+  const getFileStoragePath = async () => {
+    try {
+      const res = await axios.get('/api/textFile');
+
+      dispatch({
+        type: GET_STORAGE_PATH,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: ASSIGNMENT_ERROR,
+        payload: err,
       });
     }
   };
@@ -210,9 +229,11 @@ const AssignmentState = (props) => {
         assignments: state.assignments,
         error: state.error,
         assignmentSelected: state.assignmentSelected,
+        fileStoragePath: state.fileStoragePath,
         addAssignment,
         getAssignments,
         getAssignmentById,
+        getFileStoragePath,
         clearError,
         clearAssignmentSelected,
         deleteAssignment,

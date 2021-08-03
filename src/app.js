@@ -6,6 +6,7 @@ import cors from 'cors';
 import assignmentRoutes from './routes/assignment';
 import boardRoutes from './routes/board';
 import testProtocolRoutes from './routes/testProtocol';
+import textFileRoutes from './routes/textFile';
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use(json());
 app.use('/api', assignmentRoutes);
 app.use('/api', boardRoutes);
 app.use('/api', testProtocolRoutes);
+app.use('/api', textFileRoutes);
 
 export default app;

@@ -3,6 +3,7 @@ import {
   ADD_ASSIGNMENT,
   GET_ASSIGNMENTS,
   GET_ASSIGNMENT,
+  GET_STORAGE_PATH,
   CLEAR_ERROR,
   DELETE_ASSIGNMENT,
   CLEAR_ASSIGNMENT_SELECTED,
@@ -19,6 +20,13 @@ export default (state, action) => {
       return {
         ...state,
         assignments: action.payload,
+      };
+
+    // get file storage path from the server
+    case GET_STORAGE_PATH:
+      return {
+        ...state,
+        fileStoragePath: action.payload,
       };
 
     // get assignment by Id

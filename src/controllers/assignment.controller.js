@@ -58,6 +58,13 @@ export async function showAssignments(req, res) {
   }
 }
 
+/**
+ * When an Assignment is deleted, within the Assignment Model, it calls
+ * the 'pre' hook in MongoDB to into deep references of TestProtocols and
+ * Boards, and perform a Cascade deletion of these references.
+ * @param {Request}
+ * @param {Response}
+ */
 export async function deleteAssignment(req, res) {
   try {
     const assignment = await getAssignmentById(req.params.id);

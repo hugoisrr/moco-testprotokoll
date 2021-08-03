@@ -44,6 +44,10 @@ export async function createAssignmentTextFile(
   }
 }
 
+export function getStoragePath() {
+  return config.pruefDatenServerAddress;
+}
+
 function createTextFilePath(storagePath, number, createdAt) {
   return path.normalize(
     `${storagePath}/MoCo_FKT_${number}_${moment(createdAt).format('L')}.txt`
