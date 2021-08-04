@@ -9,4 +9,5 @@ export default {
   pruefDatenServerAddress: path.normalize(
     process.env.PRUEFDATEN_SERVER_ADDRESS
   ),
+  srcRootPath: __dirname,
 };

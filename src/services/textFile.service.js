@@ -1,5 +1,12 @@
 import moment from 'moment';
-import { writeFile, appendFileSync, existsSync } from 'fs';
+import {
+  writeFile,
+  appendFileSync,
+  existsSync,
+  lstatSync,
+  readFileSync,
+  writeFileSync,
+} from 'fs';
 import config from '../config';
 import path from 'path';
 import 'moment/locale/de';
@@ -19,11 +26,7 @@ export async function createAssignmentTextFile(
   const { number, createdAt } = await getAssignmentNumberAndCreatedAtById(
     assignmentId
   );
-  const textFilePath = createTextFilePath(
-    config.pruefDatenServerAddress,
-    number,
-    createdAt
-  );
+  const textFilePath = createTextFilePath(getStoragePath(), number, createdAt);
   const testProtocolData = createTestProtocolData(
     number,
     testProtocol,
@@ -45,7 +48,28 @@ export async function createAssignmentTextFile(
 }
 
 export function getStoragePath() {
-  return config.pruefDatenServerAddress;
+  const { filesLocationAddress } = JSON.parse(
+    readFileSync(
+      path.resolve(config.srcRootPath, 'filesLocationAddress.json'),
+      'utf8'
+    )
+  );
+
+  if (isDir(filesLocationAddress)) {
+    return filesLocationAddress;
+  } else {
+    return config.pruefDatenServerAddress;
+  }
+}
+
+// Validates if a given file address is a directory or not
+export function isDir(path) {
+  try {
+    const stat = lstatSync(path);
+    return stat.isDirectory();
+  } catch (err) {
+    return false;
+  }
 }
 
 function createTextFilePath(storagePath, number, createdAt) {

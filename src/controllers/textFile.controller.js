@@ -1,5 +1,6 @@
-import { getStoragePath } from '../services/textFile.service';
+import { getStoragePath, isDir } from '../services/textFile.service';
 import { validationResult } from 'express-validator';
+import config from '../config';
 import path from 'path';
 import { writeFileSync } from 'fs';
 
@@ -15,11 +16,20 @@ export function setNewStoragePath(req, res) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { filesLocationAddress } = req.body;
-  console.log({ filesLocationAddress });
-  writeFileSync(
-    path.resolve(__dirname, 'filesLocationAddress.json'),
-    JSON.stringify({ filesLocationAddress })
-  );
-  return res.status(200).json({ message: 'File save in JSON' });
+  let { filesLocationAddress } = req.body;
+  filesLocationAddress = path.normalize(filesLocationAddress); // normalize the address given
+
+  // Validates the address path
+  if (isDir(filesLocationAddress)) {
+    // creates new JSON file with the new address
+    writeFileSync(
+      path.resolve(config.srcRootPath, 'filesLocationAddress.json'),
+      JSON.stringify({ filesLocationAddress })
+    );
+    return res.status(200).json({ message: 'File save in JSON' });
+  } else {
+    return res
+      .status(400)
+      .json({ message: 'Es wurde kein gültiger Adresspfad angegeben.' });
+  }
 }
