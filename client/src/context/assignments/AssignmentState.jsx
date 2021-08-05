@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
+import isValidPath from 'is-valid-path';
 import AssignmentContext from './assignmentContext';
 import assignmentReducer from './assignmentReducer';
 import {
@@ -10,10 +11,12 @@ import {
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
+  PATH_NOT_VALID_ERROR,
   BOARD_ERROR,
   GET_ASSIGNMENTS,
   GET_ASSIGNMENT,
   GET_STORAGE_PATH,
+  SET_STORAGE_PATH,
 } from '../types';
 import { booleanConverter } from '../../helper/helperFunctions';
 
@@ -57,6 +60,38 @@ const AssignmentState = (props) => {
       dispatch({
         type: ASSIGNMENT_ERROR,
         payload: err,
+      });
+    }
+  };
+
+  // Set new storage path to a JSON file in the server
+  const setNewStoragePath = async (filesLocationAddress) => {
+    if (!isValidPath(filesLocationAddress)) {
+      dispatch({
+        type: PATH_NOT_VALID_ERROR,
+        payload: 'Der angegebene Dateispeicherort ist ungültig.',
+      });
+    }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const res = await axios.post(
+        '/api/textFile',
+        filesLocationAddress,
+        config
+      );
+
+      dispatch({
+        type: SET_STORAGE_PATH,
+        payload: res.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PATH_NOT_VALID_ERROR,
+        payload: 'Der neue Adressdateipfad kann nicht festgelegt werden.',
       });
     }
   };
@@ -234,6 +269,7 @@ const AssignmentState = (props) => {
         getAssignments,
         getAssignmentById,
         getFileStoragePath,
+        setNewStoragePath,
         clearError,
         clearAssignmentSelected,
         deleteAssignment,
