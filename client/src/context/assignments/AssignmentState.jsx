@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
-import isValidPath from 'is-valid-path';
 import AssignmentContext from './assignmentContext';
 import assignmentReducer from './assignmentReducer';
 import {
@@ -66,32 +65,26 @@ const AssignmentState = (props) => {
 
   // Set new storage path to a JSON file in the server
   const setNewStoragePath = async (filesLocationAddress) => {
-    if (!isValidPath(filesLocationAddress)) {
-      dispatch({
-        type: PATH_NOT_VALID_ERROR,
-        payload: 'Der angegebene Dateispeicherort ist ungültig.',
-      });
-    }
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.post(
+      await axios.post(
         '/api/textFile',
-        filesLocationAddress,
+        JSON.stringify({ filesLocationAddress }),
         config
       );
 
       dispatch({
         type: SET_STORAGE_PATH,
-        payload: res.data,
+        payload: filesLocationAddress,
       });
     } catch (error) {
       dispatch({
         type: PATH_NOT_VALID_ERROR,
-        payload: 'Der neue Adressdateipfad kann nicht festgelegt werden.',
+        payload: error.response.data.message,
       });
     }
   };

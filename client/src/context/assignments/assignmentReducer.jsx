@@ -10,6 +10,8 @@ import {
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT,
   ASSIGNMENT_ERROR,
+  SET_STORAGE_PATH,
+  PATH_NOT_VALID_ERROR,
   BOARD_ERROR,
 } from '../types';
 
@@ -24,6 +26,13 @@ export default (state, action) => {
 
     // get file storage path from the server
     case GET_STORAGE_PATH:
+      return {
+        ...state,
+        fileStoragePath: action.payload,
+      };
+
+    // set new file storage path and save it into a JSON file in the server
+    case SET_STORAGE_PATH:
       return {
         ...state,
         fileStoragePath: action.payload,
@@ -100,6 +109,13 @@ export default (state, action) => {
 
     // In case of a board error, show error
     case BOARD_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    // In case of a path error, show error
+    case PATH_NOT_VALID_ERROR:
       return {
         ...state,
         error: action.payload,

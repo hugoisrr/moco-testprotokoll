@@ -1,15 +1,29 @@
 import React, { useState, useRef, useContext, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const Einstellungen = () => {
   const assignmentContext = useContext(AssignmentContext);
-  const { fileStoragePath, getFileStoragePath } = assignmentContext;
+  const {
+    fileStoragePath,
+    getFileStoragePath,
+    setNewStoragePath,
+    clearError,
+    error,
+  } = assignmentContext;
   const [validated, setValidated] = useState(false);
   const [disable, setDisable] = useState(true);
   const [filesLocation, setFilesLocation] = useState('');
+  const [showError, setShowError] = useState(false);
   const filesLocationInputRef = useRef(null);
+  const checkBoxRef = useRef(null);
 
+  // On file load of the component, it clears the error value
+  useEffect(() => {
+    error !== null ? setShowError(true) : setShowError(false);
+  }, [error]);
+
+  // before the component get loaded gets the file path from the server
   useEffect(() => {
     getFileStoragePath();
     setFilesLocation(fileStoragePath);
@@ -25,6 +39,11 @@ const Einstellungen = () => {
     }
   };
 
+  const closeErrorMessage = () => {
+    clearError();
+    setShowError(false);
+  };
+
   const onChange = (e) => {
     if (e.target.name === 'filesLocationAddress') {
       setFilesLocation(e.target.value);
@@ -32,11 +51,15 @@ const Einstellungen = () => {
   };
 
   const onSubmit = (e) => {
+    clearError();
     const form = e.target.form;
     if (form.checkValidity()) {
       e.preventDefault();
       setValidated(false);
       // Modify location on Server
+      setNewStoragePath(filesLocation);
+      setDisable(true);
+      checkBoxRef.current.checked = false;
     } else {
       e.preventDefault();
       e.stopPropagation();
@@ -47,6 +70,14 @@ const Einstellungen = () => {
   return (
     <div>
       <h1>Einstellungen</h1>
+      {showError === true && (
+        <Alert variant='danger' onClose={closeErrorMessage} dismissible>
+          <Alert.Heading>Ops, es liegt ein Fehler vor!</Alert.Heading>
+          <p>
+            Der Server hat folgenden Fehler ausgegeben: <strong>{error}</strong>
+          </p>
+        </Alert>
+      )}
       <Form id='storageAddress' noValidate validated={validated}>
         <Form.Group>
           <Form.Label>Dateispeicherort</Form.Label>
@@ -70,6 +101,7 @@ const Einstellungen = () => {
             id='modifyAddress'
             name='modifyAddress'
             onChange={onModify}
+            ref={checkBoxRef}
             label='Dateispeicherort ändern'
           ></Form.Check>
         </Form.Group>
