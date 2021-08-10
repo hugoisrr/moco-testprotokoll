@@ -27,12 +27,15 @@ const AssignmentState = (props) => {
     fileStoragePath: '',
   };
 
+  // const server = 'http://localhost:5000'; // dev
+  const server = 'http://192.168.1.11:5000'; // production
+
   const [state, dispatch] = useReducer(assignmentReducer, initialState);
 
   // Get List of Assignments, sorted by most resent
   const getAssignments = async () => {
     try {
-      const res = await axios.get('/api/assignment');
+      const res = await axios.get(`${server}/api/assignment`);
 
       dispatch({
         type: GET_ASSIGNMENTS,
@@ -49,7 +52,7 @@ const AssignmentState = (props) => {
   // Get file storage path from the server
   const getFileStoragePath = async () => {
     try {
-      const res = await axios.get('/api/textFile');
+      const res = await axios.get(`${server}/api/textFile`);
 
       dispatch({
         type: GET_STORAGE_PATH,
@@ -72,7 +75,7 @@ const AssignmentState = (props) => {
     };
     try {
       await axios.post(
-        '/api/textFile',
+        `${server}/api/textFile`,
         JSON.stringify({ filesLocationAddress }),
         config
       );
@@ -92,7 +95,7 @@ const AssignmentState = (props) => {
   // Get Assignment selected by ID
   const getAssignmentById = async (assignmentId) => {
     try {
-      const res = await axios.get(`/api/assignment/${assignmentId}`);
+      const res = await axios.get(`${server}/api/assignment/${assignmentId}`);
       dispatch({
         type: GET_ASSIGNMENT,
         payload: res.data,
@@ -121,7 +124,11 @@ const AssignmentState = (props) => {
       },
     };
     try {
-      const res = await axios.post('/api/assignment', assignment, config);
+      const res = await axios.post(
+        `${server}/api/assignment`,
+        assignment,
+        config
+      );
 
       dispatch({
         type: ADD_ASSIGNMENT,
@@ -146,7 +153,7 @@ const AssignmentState = (props) => {
   // Delete Assignment
   const deleteAssignment = async (assignmentId) => {
     try {
-      await axios.delete(`/api/assignment/${assignmentId}`);
+      await axios.delete(`${server}/api/assignment/${assignmentId}`);
       dispatch({
         type: DELETE_ASSIGNMENT,
         payload: assignmentId,
@@ -218,13 +225,13 @@ const AssignmentState = (props) => {
     try {
       // Add board to boardsArray of Assignment
       const res = await axios.post(
-        `/api/board/${assignmentId}`,
+        `${server}/api/board/${assignmentId}`,
         boardData,
         config
       );
       // Add Testprotocol to the board
       const resTestProtocol = await axios.post(
-        `/api/test-protocol/${res.data.board._id}`,
+        `${server}/api/test-protocol/${res.data.board._id}`,
         testProtocol,
         config
       );
