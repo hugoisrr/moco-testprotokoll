@@ -27,8 +27,8 @@ const AssignmentState = (props) => {
     fileStoragePath: '',
   };
 
-  // const server = 'http://localhost:5000'; // dev
-  const server = 'http://192.168.1.11:5000'; // production
+  const server = 'http://localhost:5000'; // dev
+  // const server = 'http://192.168.1.11:5000'; // production
 
   const [state, dispatch] = useReducer(assignmentReducer, initialState);
 

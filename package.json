@@ -4,12 +4,13 @@
   "description": "Moco-test-protokoll server",
   "main": "server.js",
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build-babel": "babel src --out-dir dist",
+    "build": "npm run clean && npm run build-babel",
     "clean": "rimraf dist",
-    "start": "node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "server": "nodemon src/index.js --exec babel-node",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "start:dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,9 @@
   },
   "homepage": "https://github.com/hugoisrr/moco-testprotokoll#readme",
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/polyfill": "^7.12.1",
+    "@babel/runtime": "^7.14.8",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
