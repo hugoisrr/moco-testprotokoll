@@ -4,7 +4,8 @@
   "description": "Moco-test-protokoll server",
   "main": "server.js",
   "scripts": {
-    "build-babel": "babel src --out-dir dist",
+    "build-babel": "babel src --out-dir dist && npm run copy-json-file",
+    "copy-json-file": "copyfiles --flat src/filesLocationAddress.json dist && echo 'JSON file copied'",
     "build": "npm run clean && npm run build-babel",
     "clean": "rimraf dist",
     "start": "npm run build && node dist/index.js",
