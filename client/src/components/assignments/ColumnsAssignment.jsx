@@ -11,7 +11,7 @@ export const columns = [
   },
   {
     dataField: 'boards',
-    text: 'Zählung',
+    text: 'Anzahl getestet',
     sort: true,
     formatter: boardsNumberAssignment,
   },

@@ -60,7 +60,7 @@ const AssignmentForm = () => {
         onSubmit={onSubmit}
       >
         <Form.Group>
-          <Form.Label>Nummber</Form.Label>
+          <Form.Label>Nummmer</Form.Label>
           <Form.Control
             required
             autoFocus
@@ -73,7 +73,7 @@ const AssignmentForm = () => {
           ></Form.Control>
           <Form.Control.Feedback>Sieht gut aus!</Form.Control.Feedback>
           <Form.Control.Feedback type='invalid'>
-            Bitte geben Sie eine gültige Nummber ein.
+            Bitte geben Sie eine gültige Nummmer ein.
           </Form.Control.Feedback>
         </Form.Group>
         <Button variant='outline-primary' type='submit' className='mt-2'>

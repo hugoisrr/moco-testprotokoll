@@ -91,7 +91,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
       <Modal.Body>
         <Form noValidate validated={validated} id='testProtocolForm'>
           <Row>
-            <Form.Label column>Seriennummer der Leiterkart</Form.Label>
+            <Form.Label column>Seriennummer der Leiterkarte</Form.Label>
             <Col>
               <Form.Control
                 required

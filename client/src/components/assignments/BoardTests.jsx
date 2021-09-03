@@ -62,7 +62,7 @@ const BoardTests = () => {
         <Row className='justify-content-between mb-3'>
           <Col className='col-6'>
             <h2>
-              Testprotokollen der Auftrag - <b>{number}</b>
+              Testprotokolle des Auftrags - <b>{number}</b>
             </h2>
           </Col>
           <Col className='col-2'>

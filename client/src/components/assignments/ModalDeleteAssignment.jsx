@@ -28,19 +28,19 @@ const ModalDeleteAssignment = ({
     >
       <Modal.Header closeButton>
         <Modal.Title id='contained-modal-title-vcenter'>
-          Bestätigung zum Löschen eine Auftrag - <b>"{assignmentNumber}"</b>
+          Bestätigung zum Löschen: <b>" Auftrag - {assignmentNumber}"</b>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Alert variant='warning'>
           <Alert.Heading>Warnung!</Alert.Heading>
           <p>
-            Durch das Löschen der Auftrag löschen Sie auch den durchgeführten
+            Durch das Löschen des Auftrags löschen Sie auch den durchgeführten
             Leiterplattentest.
           </p>
           <hr />
           <p className='mb-0'>
-            Bitte bestätigen Sie, dass Sie der Auftrag löschen möchten.
+            Bitte bestätigen Sie, dass Sie den Auftrag löschen möchten.
           </p>
         </Alert>
       </Modal.Body>
@@ -50,7 +50,7 @@ const ModalDeleteAssignment = ({
         </Button>
         <Form onSubmit={onSubmit}>
           <Button type='submit' variant='outline-primary'>
-            Bestätig
+            Bestätigen
           </Button>
         </Form>
       </Modal.Footer>
