@@ -9,10 +9,11 @@ import {
   CLEAR_ASSIGNMENT_SELECTED,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT,
-  ASSIGNMENT_ERROR,
   SET_STORAGE_PATH,
   PATH_NOT_VALID_ERROR,
   BOARD_ERROR,
+  SET_MESSAGE,
+  CLEAR_MESSAGE,
 } from '../types';
 
 export default (state, action) => {
@@ -100,11 +101,24 @@ export default (state, action) => {
         assignmentSelected: assignmentSel,
       };
 
-    // In case of an assignment error, show error
-    case ASSIGNMENT_ERROR:
+    // Management of messages coming from the server
+    case SET_MESSAGE:
       return {
         ...state,
-        error: action.payload,
+        messageObject: {
+          type: action.payload.type,
+          message: action.payload.message,
+        },
+      };
+
+    // Clear messages responses sent from the server
+    case CLEAR_MESSAGE:
+      return {
+        ...state,
+        messageObject: {
+          type: action.payload.type,
+          message: action.payload.message,
+        },
       };
 
     // In case of a board error, show error

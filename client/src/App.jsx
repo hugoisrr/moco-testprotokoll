@@ -9,6 +9,7 @@ import Einstellungen from './components/pages/Einstellungen';
 import BoardTests from './components/assignments/BoardTests';
 
 import AssignmentState from './context/assignments/AssignmentState';
+import ToastContainer from './components/layout/ToastContainer';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
                 <Route exact path='/einstellungen' component={Einstellungen} />
                 <Route path='/boardTest/:id' component={BoardTests} />
               </Switch>
+              <ToastContainer />
             </Container>
           </main>
           <Footer />

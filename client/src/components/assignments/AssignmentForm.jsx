@@ -1,11 +1,10 @@
-import React, { useState, Fragment, useContext, useEffect } from 'react';
-import { Button, Form, Alert } from 'react-bootstrap';
+import React, { useState, Fragment, useContext } from 'react';
+import { Button, Form } from 'react-bootstrap';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const AssignmentForm = () => {
   const assignmentContext = useContext(AssignmentContext);
-  const { error, addAssignment, clearError } = assignmentContext;
-  const [show, setShow] = useState(false);
+  const { addAssignment } = assignmentContext;
   const [assignment, setAssignment] = useState({
     number: '',
   });
@@ -14,24 +13,14 @@ const AssignmentForm = () => {
 
   const { number } = assignment;
 
-  useEffect(() => {
-    error !== null ? setShow(true) : setShow(false);
-  }, [error]);
-
   const onChange = (e) =>
     setAssignment({ ...assignment, [e.target.name]: e.target.value });
-
-  const closeErrorMessage = () => {
-    clearError();
-    setShow(false);
-  };
 
   const onSubmit = (e) => {
     const form = e.currentTarget;
     if (form.checkValidity()) {
       e.preventDefault();
       setValidated(false);
-      clearError();
       addAssignment(assignment);
       setAssignment({
         number: '',
@@ -45,14 +34,6 @@ const AssignmentForm = () => {
 
   return (
     <Fragment>
-      {show === true && (
-        <Alert variant='danger' onClose={closeErrorMessage} dismissible>
-          <Alert.Heading>Ops, es liegt ein Fehler vor!</Alert.Heading>
-          <p>
-            Der Server hat folgenden Fehler ausgegeben: <strong>{error}</strong>
-          </p>
-        </Alert>
-      )}
       <Form
         noValidate
         validated={validated}

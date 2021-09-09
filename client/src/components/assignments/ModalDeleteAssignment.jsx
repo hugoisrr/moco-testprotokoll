@@ -33,7 +33,14 @@ const ModalDeleteAssignment = ({
       </Modal.Header>
       <Modal.Body>
         <Alert variant='warning'>
-          <Alert.Heading>Warnung!</Alert.Heading>
+          <Alert.Heading>
+            {' '}
+            <i
+              className='fas fa-exclamation-triangle fa-lg'
+              style={{ color: 'white' }}
+            ></i>{' '}
+            Warnung!
+          </Alert.Heading>
           <p>
             Durch das Löschen des Auftrags löschen Sie auch den durchgeführten
             Leiterplattentest.

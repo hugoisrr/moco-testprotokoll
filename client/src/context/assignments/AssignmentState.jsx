@@ -9,13 +9,14 @@ import {
   CLEAR_ASSIGNMENT_SELECTED,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT,
-  ASSIGNMENT_ERROR,
   PATH_NOT_VALID_ERROR,
   BOARD_ERROR,
   GET_ASSIGNMENTS,
   GET_ASSIGNMENT,
   GET_STORAGE_PATH,
   SET_STORAGE_PATH,
+  CLEAR_MESSAGE,
+  SET_MESSAGE,
 } from '../types';
 import { booleanConverter } from '../../helper/helperFunctions';
 
@@ -25,6 +26,10 @@ const AssignmentState = (props) => {
     error: null,
     assignmentSelected: null,
     fileStoragePath: '',
+    messageObject: {
+      type: null,
+      message: null,
+    },
   };
 
   const server = 'http://localhost:5000'; // dev
@@ -43,8 +48,11 @@ const AssignmentState = (props) => {
       });
     } catch (err) {
       dispatch({
-        type: ASSIGNMENT_ERROR,
-        payload: err,
+        type: SET_MESSAGE,
+        payload: {
+          type: 'danger',
+          message: err.response.data.message,
+        },
       });
     }
   };
@@ -60,8 +68,11 @@ const AssignmentState = (props) => {
       });
     } catch (err) {
       dispatch({
-        type: ASSIGNMENT_ERROR,
-        payload: err,
+        type: SET_MESSAGE,
+        payload: {
+          type: 'danger',
+          message: err.response.data.message,
+        },
       });
     }
   };
@@ -102,8 +113,11 @@ const AssignmentState = (props) => {
       });
     } catch (err) {
       dispatch({
-        type: ASSIGNMENT_ERROR,
-        payload: err.response.data.message,
+        type: SET_MESSAGE,
+        payload: {
+          type: 'danger',
+          message: err.response.data.message,
+        },
       });
     }
   };
@@ -134,10 +148,21 @@ const AssignmentState = (props) => {
         type: ADD_ASSIGNMENT,
         payload: res.data,
       });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          type: 'success',
+          message: 'Neue Auftrag erstellt',
+        },
+      });
     } catch (err) {
       dispatch({
-        type: ASSIGNMENT_ERROR,
-        payload: err.response.data.message,
+        type: SET_MESSAGE,
+        payload: {
+          type: 'danger',
+          message: err.response.data.message,
+        },
       });
     }
   };
@@ -150,6 +175,17 @@ const AssignmentState = (props) => {
     });
   };
 
+  // Clear messages sent from the server
+  const clearMessage = () => {
+    dispatch({
+      type: CLEAR_MESSAGE,
+      payload: {
+        type: null,
+        message: null,
+      },
+    });
+  };
+
   // Delete Assignment
   const deleteAssignment = async (assignmentId) => {
     try {
@@ -158,10 +194,21 @@ const AssignmentState = (props) => {
         type: DELETE_ASSIGNMENT,
         payload: assignmentId,
       });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          type: 'info',
+          message: 'Auftrag gelöscht.',
+        },
+      });
     } catch (err) {
       dispatch({
-        type: ASSIGNMENT_ERROR,
-        payload: err,
+        type: SET_MESSAGE,
+        payload: {
+          type: 'danger',
+          message: err.response.data.message,
+        },
       });
     }
   };
@@ -265,7 +312,9 @@ const AssignmentState = (props) => {
         error: state.error,
         assignmentSelected: state.assignmentSelected,
         fileStoragePath: state.fileStoragePath,
+        messageObject: state.messageObject,
         addAssignment,
+        clearMessage,
         getAssignments,
         getAssignmentById,
         getFileStoragePath,
