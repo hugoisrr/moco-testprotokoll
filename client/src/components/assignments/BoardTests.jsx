@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react';
-import { Row, Col, Button, Alert, Spinner } from 'react-bootstrap';
+import { Row, Col, Button, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import AssignmentContext from '../../context/assignments/assignmentContext';
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -9,50 +9,28 @@ import ModalTestProtocol from './ModalTestProtocol';
 
 const BoardTests = () => {
   const { id } = useParams();
-  const [modalShow, setModalShow] = useState(false);
-  const [newModal, setNewModal] = useState(false);
+  const [modalTestProtocolShow, setModalTestProtocolShow] = useState(false);
+  const [newModalTestProtocol, setNewModalTestProtocol] = useState(false);
   const assignmentContext = useContext(AssignmentContext);
-  const { assignmentSelected, getAssignmentById, error, clearError } =
-    assignmentContext;
+  const { assignmentSelected, getAssignmentById } = assignmentContext;
 
   useEffect(() => {
-    clearError();
     getAssignmentById(id);
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (newModal) {
-      setModalShow(true);
+    if (newModalTestProtocol) {
+      setModalTestProtocolShow(true);
     }
-  }, [newModal]);
+  }, [newModalTestProtocol]);
 
-  if (assignmentSelected === null && error === null) {
+  if (assignmentSelected === null) {
     return (
       <BoardTestsContent>
         <div className='d-flex justify-content-center'>
           <Spinner animation='grow' className='mt-4'></Spinner>
         </div>
-      </BoardTestsContent>
-    );
-  } else if (error !== null) {
-    return (
-      <BoardTestsContent>
-        <Row className='justify-content-center'>
-          <Col lg='7'>
-            <Alert variant='danger'>
-              <Alert.Heading>Fehler vom Server.</Alert.Heading>
-              <p>
-                Der Server hat versucht, die Daten mit der ID <b>{id}</b>{' '}
-                abzurufen, hat aber folgenden Fehler gefunden: <b>{error}</b>
-              </p>
-              <hr />
-              <p className='mb-0'>
-                Bitte wenden Sie sich an den Administrator.
-              </p>
-            </Alert>
-          </Col>
-        </Row>
       </BoardTestsContent>
     );
   } else {
@@ -68,7 +46,7 @@ const BoardTests = () => {
           <Col className='col-2'>
             <Button
               variant='outline-primary'
-              onClick={() => setModalShow(true)}
+              onClick={() => setModalTestProtocolShow(true)}
             >
               Neuer Test
             </Button>
@@ -85,9 +63,9 @@ const BoardTests = () => {
           />
         )}
         <ModalTestProtocol
-          show={modalShow}
-          setNewModal={(value) => setNewModal(value)}
-          onHide={() => setModalShow(false)}
+          show={modalTestProtocolShow}
+          setNewModal={(value) => setNewModalTestProtocol(value)}
+          onHide={() => setModalTestProtocolShow(false)}
           assignmentId={id}
         />
       </BoardTestsContent>

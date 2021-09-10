@@ -5,8 +5,13 @@ import path from 'path';
 import { writeFileSync } from 'fs';
 
 export function getStoragePathFromServer(req, res) {
-  const storagePath = getStoragePath();
-  return res.status(200).json(storagePath);
+  try {
+    const storagePath = getStoragePath();
+    return res.status(200).json(storagePath);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({ message: 'Server Error' });
+  }
 }
 
 export function setNewStoragePath(req, res) {

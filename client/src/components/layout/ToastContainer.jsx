@@ -68,7 +68,7 @@ const ToastContainer = () => {
       style={{ zIndex: 11 }}
     >
       {show === true && (
-        <Toast onClose={closeToastMessage} delay={5500} bg={type} autohide>
+        <Toast onClose={closeToastMessage} delay={6250} bg={type} autohide>
           {renderToastHeader(type)}
           <Toast.Body className={'text-white'}>
             Der Server hat folgende Nachricht gesendet:{' '}

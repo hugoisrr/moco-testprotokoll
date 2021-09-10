@@ -39,10 +39,12 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
     if (form.checkValidity()) {
       e.preventDefault();
       setValidated(false);
+      /* Board Test with valid data is sent */
       addTestedBoardToAssignment({
         ...testBoard,
         assignmentId,
       });
+      /* Form fields are set to empty or null */
       setTestBoard({
         serialNumber: '',
         tester: null,

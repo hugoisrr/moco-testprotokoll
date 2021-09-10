@@ -10,8 +10,6 @@ import {
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT,
   SET_STORAGE_PATH,
-  PATH_NOT_VALID_ERROR,
-  BOARD_ERROR,
   SET_MESSAGE,
   CLEAR_MESSAGE,
 } from '../types';
@@ -119,20 +117,6 @@ export default (state, action) => {
           type: action.payload.type,
           message: action.payload.message,
         },
-      };
-
-    // In case of a board error, show error
-    case BOARD_ERROR:
-      return {
-        ...state,
-        error: action.payload,
-      };
-
-    // In case of a path error, show error
-    case PATH_NOT_VALID_ERROR:
-      return {
-        ...state,
-        error: action.payload,
       };
 
     default:

@@ -44,7 +44,9 @@ export async function getAssignment(req, res) {
     console.error(err.message);
     if (err.kind === 'ObjectId')
       return res.status(404).json({ message: 'Auftrag nicht gefunden' });
-    return res.status(500).send('Server Error');
+    return res
+      .status(500)
+      .json({ message: 'Auftrag nicht gefunden - Server Error' });
   }
 }
 
@@ -54,7 +56,7 @@ export async function showAssignments(req, res) {
     return res.json(assignmentsList);
   } catch (err) {
     console.error(err.message);
-    return res.status(500).send('Server Error');
+    return res.status(500).json({ message: 'Server Error' });
   }
 }
 
@@ -77,6 +79,6 @@ export async function deleteAssignment(req, res) {
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ message: 'Auftrag nicht gefunden' });
     }
-    return res.status(500).send('Auftrag nicht gefunden');
+    return res.status(500).json({ message: 'Auftrag nicht gefunden' });
   }
 }

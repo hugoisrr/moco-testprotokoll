@@ -25,8 +25,8 @@ export async function addBoardToAssignment(req, res) {
   );
   // Verify if the assignment has the same number as in the serialNumber of the board
   if (!belongsBoardToAssignment)
-    return res.status(404).json({
-      message: 'Die Seriennummer stimmt nicht der Auftragsnummer überein.',
+    return res.status(406).json({
+      message: `Die Seriennummer ${serialNumber} stimmt nicht der Auftragsnummer ${assignment.number} überein.`,
     });
 
   try {
@@ -43,6 +43,6 @@ export async function addBoardToAssignment(req, res) {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json(err);
+    return res.status(500).json({ message: 'Server Error' });
   }
 }

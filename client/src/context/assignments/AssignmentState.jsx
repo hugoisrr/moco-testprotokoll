@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import AssignmentContext from './assignmentContext';
 import assignmentReducer from './assignmentReducer';
@@ -9,8 +10,6 @@ import {
   CLEAR_ASSIGNMENT_SELECTED,
   ADD_TESTED_BOARD_TO_ASSIGNMENT,
   ADD_NEW_TESTED_BOARD_TO_ASSIGNMENT,
-  PATH_NOT_VALID_ERROR,
-  BOARD_ERROR,
   GET_ASSIGNMENTS,
   GET_ASSIGNMENT,
   GET_STORAGE_PATH,
@@ -35,6 +34,16 @@ const AssignmentState = (props) => {
   const server = 'http://localhost:5000'; // dev
   // const server = 'http://192.168.1.11:5000'; // production
 
+  const serverErrorMessage = (err) => {
+    return {
+      type: 'danger',
+      message:
+        err.response !== undefined ? err.response.data.message : 'Server Error',
+    };
+  };
+
+  let history = useHistory();
+
   const [state, dispatch] = useReducer(assignmentReducer, initialState);
 
   // Get List of Assignments, sorted by most resent
@@ -49,10 +58,7 @@ const AssignmentState = (props) => {
     } catch (err) {
       dispatch({
         type: SET_MESSAGE,
-        payload: {
-          type: 'danger',
-          message: err.response.data.message,
-        },
+        payload: serverErrorMessage(err),
       });
     }
   };
@@ -69,10 +75,7 @@ const AssignmentState = (props) => {
     } catch (err) {
       dispatch({
         type: SET_MESSAGE,
-        payload: {
-          type: 'danger',
-          message: err.response.data.message,
-        },
+        payload: serverErrorMessage(err),
       });
     }
   };
@@ -95,10 +98,10 @@ const AssignmentState = (props) => {
         type: SET_STORAGE_PATH,
         payload: filesLocationAddress,
       });
-    } catch (error) {
+    } catch (err) {
       dispatch({
-        type: PATH_NOT_VALID_ERROR,
-        payload: error.response.data.message,
+        type: SET_MESSAGE,
+        payload: serverErrorMessage(err),
       });
     }
   };
@@ -114,10 +117,7 @@ const AssignmentState = (props) => {
     } catch (err) {
       dispatch({
         type: SET_MESSAGE,
-        payload: {
-          type: 'danger',
-          message: err.response.data.message,
-        },
+        payload: serverErrorMessage(err),
       });
     }
   };
@@ -159,15 +159,13 @@ const AssignmentState = (props) => {
     } catch (err) {
       dispatch({
         type: SET_MESSAGE,
-        payload: {
-          type: 'danger',
-          message: err.response.data.message,
-        },
+        payload: serverErrorMessage(err),
       });
     }
   };
 
   // Clear error message from the server
+  // FIXME delete method and error variable from the state
   const clearError = () => {
     dispatch({
       type: CLEAR_ERROR,
@@ -205,10 +203,7 @@ const AssignmentState = (props) => {
     } catch (err) {
       dispatch({
         type: SET_MESSAGE,
-        payload: {
-          type: 'danger',
-          message: err.response.data.message,
-        },
+        payload: serverErrorMessage(err),
       });
     }
   };
@@ -283,6 +278,14 @@ const AssignmentState = (props) => {
         config
       );
 
+      /**
+       * if the Board added to the Assignment already exists, (meaning: that
+       * the Board was already tested by its test failed or simply the Board
+       * was tested again), then the type ADD_TESTED_BOARD_TO _ASSIGNMENT is fired,
+       * else a new Board was created in the server and added to the Assignment
+       * along with its test protocol.
+       */
+
       res.data.boardExists
         ? dispatch({
             type: ADD_TESTED_BOARD_TO_ASSIGNMENT,
@@ -298,9 +301,19 @@ const AssignmentState = (props) => {
             },
           });
     } catch (err) {
+      /**
+       * if status response is 406 'Not Acceptable',
+       * (meaning that the serial number of the Board, doesn't
+       * match with the Assignment number), then App redirects
+       * to the Home page.
+       */
+
+      if (err.response.status === 406) {
+        history.push('/');
+      }
       dispatch({
-        type: BOARD_ERROR,
-        payload: err.response.data.message,
+        type: SET_MESSAGE,
+        payload: serverErrorMessage(err),
       });
     }
   };
