@@ -131,7 +131,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
                 name='tester'
                 id='tester'
                 min='99'
-                max='800'
+                max='990'
                 value={tester}
                 ref={testerRef}
                 onChange={onChange}

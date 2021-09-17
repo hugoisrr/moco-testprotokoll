@@ -337,6 +337,15 @@ const AssignmentState = (props) => {
               board: resTestProtocol.data.board,
             },
           });
+
+      // Set success message
+      dispatch({
+        type: SET_MESSAGE,
+        payload: {
+          type: 'success',
+          message: 'Neues Testprotokoll hinzugefügt.',
+        },
+      });
     } catch (err) {
       /**
        * if status response is 406 'Not Acceptable',
