@@ -12,10 +12,26 @@ import {
   SET_STORAGE_PATH,
   SET_MESSAGE,
   CLEAR_MESSAGE,
+  SET_TESTER,
+  CLEAR_TESTER,
 } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
+    // set tester in testProtocol
+    case SET_TESTER:
+      return {
+        ...state,
+        tester: action.payload,
+      };
+
+    // clear tester in testProtocol
+    case CLEAR_TESTER:
+      return {
+        ...state,
+        tester: action.payload,
+      };
+
     // get list of assignments added
     case GET_ASSIGNMENTS:
       return {

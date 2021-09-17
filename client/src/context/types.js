@@ -1,4 +1,6 @@
 export const ADD_ASSIGNMENT = 'ADD_ASSIGNMENT';
+export const SET_TESTER = 'SET_TESTER';
+export const CLEAR_TESTER = 'CLEAR_TESTER';
 export const GET_ASSIGNMENTS = 'GET_ASSIGNMENTS';
 export const GET_ASSIGNMENT = 'GET_ASSIGNMENT';
 export const GET_STORAGE_PATH = 'GET_STORAGE_PATH';

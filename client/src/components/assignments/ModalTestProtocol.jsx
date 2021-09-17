@@ -4,7 +4,8 @@ import AssignmentContext from '../../context/assignments/assignmentContext';
 
 const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
   const assignmentContext = useContext(AssignmentContext);
-  const { addTestedBoardToAssignment } = assignmentContext;
+  const { addTestedBoardToAssignment, tester, setTester, clearTester } =
+    assignmentContext;
   const testProtocol = {
     activeDisplay: null,
     lightsUpLED: null,
@@ -20,7 +21,6 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
   };
   const [testBoard, setTestBoard] = useState({
     serialNumber: '',
-    tester: null,
     ...testProtocol,
   });
   const serialNumberRef = useRef(null);
@@ -28,7 +28,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
 
   const [validated, setValidated] = useState(false);
 
-  const { serialNumber, tester, voltageValue, temperature } = testBoard;
+  const { serialNumber, voltageValue, temperature } = testBoard;
 
   useEffect(() => {
     setNewModal(false);
@@ -42,12 +42,12 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
       /* Board Test with valid data is sent */
       addTestedBoardToAssignment({
         ...testBoard,
+        tester,
         assignmentId,
       });
       /* Form fields are set to empty or null */
       setTestBoard({
         serialNumber: '',
-        tester: null,
         ...testProtocol,
       });
       onHide();
@@ -60,6 +60,7 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
   };
 
   const onCancel = () => {
+    clearTester();
     setNewModal(false);
     onHide();
   };
@@ -70,11 +71,19 @@ const ModalTestProtocol = ({ onHide, show, assignmentId, setNewModal }) => {
     }
   };
 
-  const onChange = (e) =>
+  const onChange = (e) => {
+    if (e.target.name === 'tester') {
+      setTester(e.target.value);
+      setTestBoard({
+        ...testBoard,
+        [e.target.name]: e.target.value,
+      });
+    }
     setTestBoard({
       ...testBoard,
       [e.target.name]: e.target.value,
     });
+  };
 
   return (
     <Modal

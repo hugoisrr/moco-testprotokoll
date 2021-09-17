@@ -16,6 +16,8 @@ import {
   SET_STORAGE_PATH,
   CLEAR_MESSAGE,
   SET_MESSAGE,
+  SET_TESTER,
+  CLEAR_TESTER,
 } from '../types';
 import { booleanConverter } from '../../helper/helperFunctions';
 
@@ -25,6 +27,7 @@ const AssignmentState = (props) => {
     error: null,
     assignmentSelected: null,
     fileStoragePath: '',
+    tester: '',
     messageObject: {
       type: null,
       message: null,
@@ -208,6 +211,40 @@ const AssignmentState = (props) => {
     }
   };
 
+  /* Set tester from ModelTestProtocol  */
+
+  const setTester = (tester) => {
+    try {
+      if (tester !== '') {
+        dispatch({
+          type: SET_TESTER,
+          payload: tester,
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: SET_MESSAGE,
+        payload: serverErrorMessage(err),
+      });
+    }
+  };
+
+  /* Clear tester -> '' when creates a New TestProtocol or changer of tester */
+
+  const clearTester = () => {
+    try {
+      dispatch({
+        type: CLEAR_TESTER,
+        payload: '',
+      });
+    } catch (err) {
+      dispatch({
+        type: SET_MESSAGE,
+        payload: serverErrorMessage(err),
+      });
+    }
+  };
+
   // Add Board to an Assignment
   const addTestedBoardToAssignment = async ({
     activeDisplay,
@@ -326,6 +363,7 @@ const AssignmentState = (props) => {
         assignmentSelected: state.assignmentSelected,
         fileStoragePath: state.fileStoragePath,
         messageObject: state.messageObject,
+        tester: state.tester,
         addAssignment,
         clearMessage,
         getAssignments,
@@ -336,6 +374,8 @@ const AssignmentState = (props) => {
         clearAssignmentSelected,
         deleteAssignment,
         addTestedBoardToAssignment,
+        setTester,
+        clearTester,
       }}
     >
       {props.children}
