@@ -34,7 +34,7 @@ const AssignmentState = (props) => {
     },
   };
 
-  const server = process.env.SERVER_IP_ADDRESS; // server ip address
+  const server = process.env.REACT_APP_SERVER_IP_ADDRESS; // server ip address
 
   const serverErrorMessage = (err) => {
     return {
