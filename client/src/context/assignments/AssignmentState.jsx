@@ -34,8 +34,7 @@ const AssignmentState = (props) => {
     },
   };
 
-  const server = 'http://localhost:5000'; // dev
-  // const server = 'http://192.168.1.11:5000'; // production
+  const server = process.env.SERVER_IP_ADDRESS; // server ip address
 
   const serverErrorMessage = (err) => {
     return {
